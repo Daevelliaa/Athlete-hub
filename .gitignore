@@ -1,6 +1,9 @@
 #Ignorer l'environnement virtuel 
 venv/
 
+#Ignorer les variables d'environnement 
+.env
+
 # Ignorer les fichiers temporaires
 *.log
 *.tmp

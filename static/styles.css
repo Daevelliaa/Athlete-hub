@@ -1,11 +1,30 @@
 body {
-    background-color: #f4f4f4;
-    font-family: Arial, sans-serif;
-    text-align: center;
+    background-color: rgb(18, 18, 18);
+    font-family: SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    color:white;
+    display:flex;  /*On active Flexbox*/
+    justify-content: center; /*Centrer horizontalement*/
+    align-items: center; /*Centrer verticalement*/
+    height:100vh;/*Prend toute la taille de l'écran donc body prend toute la taille de l'écran*/
+    margin: 0;
 }
+
+
+.container {
+    text-align: left; /* Centre le texte à l'intérieur */
+    padding: 5px;
+    /*background-color: rgba(181, 25, 168, 0.05);*/ /* pour bien voir les bords de ma flexbox */
+    border-radius: 10px;
+}
+
 h1 {
-    color: #ff5733;
+    font-size: 1.5rem; /* Taille du texte */
+    margin-bottom: 20px; /* Espacement sous le titre */
 }
+
 p {
-    font-size: 18px;
+    font-size: 0.9rem;
+    opacity: 0.8; /* Légère transparence */
 }
+
+

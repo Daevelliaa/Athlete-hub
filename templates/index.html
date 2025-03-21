@@ -7,8 +7,14 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     </head>
 <body>
-    <h1>Bienvenue sur mon premier site Flask</h1>
-    <p>Ceci est une page HTML liée à Flask.</p>
+    <div class="container">
+        <h1>2024 Fitness Recap 🏃</h1>
+        <p>Explore Yearly recaps of your Strava Activities</p>
+        <a href="/connect">
+            <img src="{{ url_for('static', filename='images/connect-with-strava.svg') }}" alt="Strava Logo" width="150">
+        
+        </a>
+    </div>
     
 </body>
 </html>

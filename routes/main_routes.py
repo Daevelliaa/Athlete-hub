@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask, render_template, redirect, request, jsonify
+from flask import Blueprint, render_template, redirect, request, jsonify
 from auth.strava import exchange_code_access_token
 
 main_bp= Blueprint('main', __name__)

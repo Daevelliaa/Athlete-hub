@@ -1,4 +1,5 @@
-from flask import Blueprint, Flask, render_template, redirect, request
+from flask import Blueprint, Flask, render_template, redirect, request, jsonify
+from auth.strava import exchange_code_access_token
 
 main_bp= Blueprint('main', __name__)
 
@@ -13,12 +14,10 @@ def connect():
 
 @main_bp.route('/callback')
 def callback():
-    error = request.args.get('error')
     code = request.args.get('code')
-
-    if error == 'access_denied':
-        return "L'utilisateur a refusé la connexion à Strava ❌"
-    elif code:
-        return f"Connexion réussie ! Code reçu : {code}"
-    else:
-        return "Erreur inconnue"
+    if not code:
+        return "Erreur: Aucun code reçu de Strava"
+    
+    token_data=exchange_code_access_token(code)
+    return jsonify(token_data)
+    

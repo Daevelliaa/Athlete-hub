@@ -2,7 +2,7 @@
 venv/
 
 #Ignorer les variables d'environnement 
-.env
+#.env
 
 # Ignorer les fichiers temporaires
 *.log

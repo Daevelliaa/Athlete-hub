@@ -1,5 +1,5 @@
 import plotly.graph_objs as go
-import dash_core_components as dcc
+from dash import dcc
 
 def create_graphique():
     # Données des kilomètres parcourus chaque mois

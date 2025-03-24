@@ -1,16 +1,19 @@
 import dash
 from dash import html
 from dash_components.first_graphique import create_graphique
+from dash_components.donut_chart import create_donut_graphique
+from dash_components.heatmap import generate_daily_heatmap
 
 def create_dash_app(flask_app):
     # Assurez-vous que Dash est correctement configuré avec Flask
     dash_app = dash.Dash(__name__,server=flask_app,routes_pathname_prefix='/dashboard/',)
 
     graphique = create_graphique()
+    
 
     # Définir la mise en page de Dash
     dash_app.layout = html.Div(
-        id='dash-container',  # Appliquer une classe CSS
+        id='dash-container',  # Appliquer une classe CSS style.css stocké dans assets
         children=[
             # Titre de la page
             html.P("Bienvenue dans ton Dashboard", style={"text-align": "left"}),
@@ -22,7 +25,7 @@ def create_dash_app(flask_app):
                 children=[
                     html.Div(
                         className="box1",
-                        children=[html.P("Graphiques à venir ici", style={"color": "white"})]
+                        children=[generate_daily_heatmap()]
                     ),
                     html.Div(
                         className="box",
@@ -30,9 +33,7 @@ def create_dash_app(flask_app):
                     ),
                     html.Div(
                         className="box",
-                        children=[html.P("Graphiques à venir ici", style={"color": "white"}),
-                                  html.A("Se déconnecter",href="/logout",style={"color":"red","font-weight": "bold"})
-                                  ]
+                        children=[create_donut_graphique()],
                     ),
                 ]
             ),
@@ -42,7 +43,9 @@ def create_dash_app(flask_app):
                 children=[
                     html.Div(
                         className="box",
-                        children=[html.P("Graphiques à venir ici", style={"color": "white"})]
+                        children=[html.P("Graphiques à venir ici", style={"color": "white"}),
+                                  html.A("Se déconnecter",href="/logout",style={"color":"red","font-weight": "bold"})
+                                  ]
                     ),
                     html.Div(
                         className="box",

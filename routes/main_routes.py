@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, request, jsonify
 from auth.strava import exchange_code_access_token
+from core.config import CLIENT_ID
 
 main_bp= Blueprint('main', __name__)
 
@@ -9,7 +10,7 @@ def home():
 
 @main_bp.route("/connect")
 def connect():
-    strava_oauth_url="http://www.strava.com/oauth/authorize?client_id=149550&response_type=code&redirect_uri=http://127.0.0.1:5000/callback&approval_prompt=force&scope=read_all,activity:read_all,profile:read_all"
+    strava_oauth_url=f"http://www.strava.com/oauth/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri=http://127.0.0.1:5000/callback&approval_prompt=force&scope=read_all,activity:read_all,profile:read_all"
     return redirect(strava_oauth_url)
 
 @main_bp.route('/callback')

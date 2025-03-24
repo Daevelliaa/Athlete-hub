@@ -40,10 +40,7 @@ def dashboard():
     if not athlete:
         return redirect('/')
     
-    return f"""
-    <h1>Bienvenue {athlete['firstname']} !</h1>
-    <p><a href="/logout">Se déconnecter</a></p>
-"""
+    return redirect('/dashboard/')
 
 
 @main_bp.route('/logout')

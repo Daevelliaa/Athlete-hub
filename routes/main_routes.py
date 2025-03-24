@@ -1,16 +1,19 @@
-from flask import Blueprint, render_template, redirect, request, jsonify
+from flask import Blueprint, render_template, redirect, request, jsonify, session
 from auth.strava import exchange_code_access_token
 from core.config import CLIENT_ID
+import time
 
 main_bp= Blueprint('main', __name__)
 
 @main_bp.route('/')
 def home():
+    if 'athlete' in session:
+        return redirect('/dashboard')
     return render_template('index.html')
 
 @main_bp.route("/connect")
 def connect():
-    strava_oauth_url=f"http://www.strava.com/oauth/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri=http://127.0.0.1:5000/callback&approval_prompt=force&scope=read_all,activity:read_all,profile:read_all"
+    strava_oauth_url=f"http://www.strava.com/oauth/authorize?client_id={CLIENT_ID}&response_type=code&redirect_uri=http://127.0.0.1:5000/callback&approval_prompt=auto&scope=read_all,activity:read_all,profile:read_all"
     return redirect(strava_oauth_url)
 
 @main_bp.route('/callback')
@@ -20,5 +23,32 @@ def callback():
         return "Erreur: Aucun code reçu de Strava"
     
     token_data=exchange_code_access_token(code)
-    return jsonify(token_data)
+    
+    #stockage dans la session
+    session['access_token']=token_data['access_token']
+    session['expires_at']=token_data['expires_at']
+    session['athlete']=token_data['athlete']
+
+    return redirect('/dashboard')
+
+@main_bp.route('/dashboard')
+def dashboard():
+    if 'access_token' not in session or time.time()> session['expires_at']:
+        return redirect('/connect')
+
+    athlete=session.get('athlete')
+    if not athlete:
+        return redirect('/')
+    
+    return f"""
+    <h1>Bienvenue {athlete['firstname']} !</h1>
+    <p><a href="/logout">Se déconnecter</a></p>
+"""
+
+
+@main_bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
+
     

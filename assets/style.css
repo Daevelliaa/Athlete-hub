@@ -1,0 +1,42 @@
+/* Applique un fond noir à toute la page */
+body {
+    background-color: #000000;  /* Fond noir */
+    color: white;  /* Texte en blanc */
+    font-family: SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;  /* Police pour tout le texte */
+}
+
+p {
+    font-size: 1rem;
+}
+
+/* Conteneur qui utilise Flexbox pour afficher les boîtes */
+.flex-container {
+    display: flex;  /* Active Flexbox */
+    flex-wrap: wrap;  /* Permet aux éléments de passer à la ligne si nécessaire */
+    gap: 4px;  /* Espace entre les boîtes */
+    justify-content: center;  /* Aligne les éléments au centre */
+    padding: 0px;
+    margin:0;
+    margin-bottom: 3px;
+}
+
+/* Chaque boîte aura un fond gris foncé */
+.box {
+    background-color: rgb(18, 18, 18);  /* Fond gris foncé */
+    padding: 1px;
+    margin: 1px;
+    border-radius: 1px;
+    width: 24.5%;  /* Largeur fixe des boîtes */
+    text-align: center;
+    height: 450px;
+}
+
+.box1 {
+    background-color: rgb(18, 18, 18);  /* Fond gris foncé */
+    padding: 1px;
+    margin: 1px;
+    border-radius: 1px;
+    width: 49.5%;  /* Largeur fixe des boîtes */
+    text-align: center;
+    height: 450px;
+}

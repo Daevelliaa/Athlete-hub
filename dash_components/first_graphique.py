@@ -10,33 +10,40 @@ def create_graphique():
     graphique = dcc.Graph(
         id='graphique-kilometres',
         figure={
-            'data': [
-                go.Bar(
-                    x=mois,
-                    y=kilometre,
-                    name='Kilomètres parcourus',
-                    marker={'color': 'red'},  # Couleur personnalisée pour les barres
-                )
-            ],
+            'data': [go.Bar(x=mois,
+                            y=kilometre,
+                            name='Kilomètres parcourus',
+                                
+                            text=kilometre,
+                            textposition='outside',
+                            textfont=dict(size=15,color='white', family='SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace'),
+                            marker=dict(color='#5FB49C',line=dict(color='black',width=0.5)),
+                            opacity=0.9
+                            )],
             'layout': go.Layout(
-                title='Kilomètres parcourus par mois',
-                title_x=0.5,  # Centrer le titre
                 xaxis={
-                    'title': 'Mois',
-                    'tickvals': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                    
+                    'tickvals': [0, 3, 6, 9,],
                     'showgrid': False,  # Enlever les lignes de la grille
                     'zeroline': False,  # Enlever la ligne zéro
-                    'showline': False   # Enlever la ligne de l'axe X
+                    'showline': True,  # Enlever la ligne de l'axe X
+                    'linecolor':'white',
+                    'ticktext':['Janvier', 'Avril', 'Juillet', 'Octobre'],
+                    'tickangle':0,
+                    'tickfont':dict(color='white',family='SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace'),
+                    'ticks':'outside',
+                    'ticklen':6,
+                    'tickcolor':'white',
                 },
                 yaxis={
-                    'title': 'Kilomètres',
-                    'showgrid': True,  # Garder la grille pour l'axe Y
+                    'showticklabels': False,
+                    'showgrid': False,  # Enlever la grille pour l'axe Y
                     'zeroline': False,  # Enlever la ligne zéro
                 },
                 plot_bgcolor='rgba(0, 0, 0, 0)',  # Fond transparent pour un effet "image"
                 paper_bgcolor='rgba(0, 0, 0, 0)',  # Fond transparent pour l'ensemble du graphique
                 showlegend=False,  # Enlever la légende
-                margin=dict(t=50, b=50, l=50, r=50),  # Marges autour du graphique
+                margin=dict(t=60, b=30, l=30, r=30),  # Marges autour du graphique
             )
         },
         config={'displayModeBar': False}  # Désactiver la barre de mode Plotly

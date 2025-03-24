@@ -25,8 +25,8 @@ p {
     background-color: rgb(18, 18, 18);  /* Fond gris foncé */
     padding: 1px;
     margin: 1px;
-    border-radius: 1px;
-    width: 24.5%;  /* Largeur fixe des boîtes */
+    border-radius: 5px;
+    width: 24.4%;  /* Largeur fixe des boîtes */
     text-align: center;
     height: 450px;
 }
@@ -35,7 +35,7 @@ p {
     background-color: rgb(18, 18, 18);  /* Fond gris foncé */
     padding: 1px;
     margin: 1px;
-    border-radius: 1px;
+    border-radius: 5px;
     width: 49.5%;  /* Largeur fixe des boîtes */
     text-align: center;
     height: 450px;

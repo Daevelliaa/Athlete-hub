@@ -4,11 +4,7 @@ from dash_components.first_graphique import create_graphique
 
 def create_dash_app(flask_app):
     # Assurez-vous que Dash est correctement configuré avec Flask
-    dash_app = dash.Dash(
-        __name__,
-        server=flask_app,  # Relie Dash au serveur Flask existant
-        routes_pathname_prefix='/dashboard/',  # Chemin d'URL de l'application Dash
-    )
+    dash_app = dash.Dash(__name__,server=flask_app,routes_pathname_prefix='/dashboard/',)
 
     graphique = create_graphique()
 

@@ -27,7 +27,19 @@ def create_dash_app(flask_app):
                     ),
                     html.Div(
                         className="box",
-                        children=[create_graphique()]
+                        children=[
+                            html.Div(
+                                className="box-header",
+                                children=[
+                                    html.Img(src=dash.get_asset_url('rocket.svg'), className="box-icon"),
+                                    html.Div([
+                                        html.P("Total Hours", className="box-title"),
+                                        html.P("total distance per month", className="box-subtitle"),
+                                    ])
+                                ]
+                            ),
+                            create_graphique()
+                        ]
                     ),
                     html.Div(
                         className="box",
@@ -43,7 +55,7 @@ def create_dash_app(flask_app):
                                 ]
                             ),
                             create_donut_graphique()
-                        ],
+                        ]
                     ),
                 ]
             ),

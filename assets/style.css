@@ -6,7 +6,8 @@ body {
 }
 
 p {
-    font-size: 1rem;
+    font-size: 1.2rem;
+    font-family:SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
 }
 
 /* Conteneur qui utilise Flexbox pour afficher les boîtes */

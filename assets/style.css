@@ -13,14 +13,13 @@ p {
 .flex-container {
     display: flex;  /* Active Flexbox */
     flex-wrap: wrap;  /* Permet aux éléments de passer à la ligne si nécessaire */
-    gap: 4px;  /* Espace entre les boîtes */
-    justify-content: center;  /* Aligne les éléments au centre */
+    justify-content: space-evenly;  /* met le meme espacement entre les item */
     padding: 0px;
     margin:0;
     margin-bottom: 3px;
 }
 
-/* Chaque boîte aura un fond gris foncé */
+/* OBJECTIF FAIRE DES BOX RESPONSIVE POUR CHAQUE ECRAN DONC TEL, PC AVEC FLEXBOX */
 .box {
     background-color: rgb(18, 18, 18);  /* Fond gris foncé */
     padding: 1px;

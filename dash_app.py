@@ -35,10 +35,10 @@ def create_dash_app(flask_app):
                             html.Div(
                                 className="box-header",
                                 children=[
-                                    html.Img(src=dash.get_asset_url('thumbs-up.svg'),className="box-icon"),
+                                    html.Img(src=dash.get_asset_url('bed.svg'),className="box-icon"),
                                     html.Div([
-                                        html.P("Socials",className="box-title"),
-                                        html.P("total kudos and comments received", className="box-subtitle"),
+                                        html.P("Rest Days",className="box-title"),
+                                        html.P("rest days vs. active days", className="box-subtitle"),
                                     ])
                                 ]
                             ),

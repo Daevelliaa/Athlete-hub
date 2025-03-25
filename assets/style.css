@@ -29,6 +29,9 @@ p {
     width: 24.4%;  /* Largeur fixe des boîtes */
     text-align: center;
     height: 450px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .box1 {
@@ -39,4 +42,35 @@ p {
     width: 49.5%;  /* Largeur fixe des boîtes */
     text-align: center;
     height: 450px;
+}
+
+.box-header{
+    display:flex;
+    align-items: flex-start;
+    margin-bottom: 8px;    
+}
+
+.box-icon{
+    width:18px;
+    margin-bottom: 4px;
+    filter: invert(1);
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.box-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+    text-align:left;
+    padding-left: 10px;
+    padding-top:5px;
+}
+
+.box-subtitle {
+    font-size: 10px;
+    color: #aaa;
+    margin: 0;
+    padding-left: 10px;
 }

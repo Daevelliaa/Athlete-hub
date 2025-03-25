@@ -33,7 +33,19 @@ def create_dash_app(flask_app):
                     ),
                     html.Div(
                         className="box",
-                        children=[create_donut_graphique()],
+                        children=[
+                            html.Div(
+                                className="box-header",
+                                children=[
+                                    html.Img(src=dash.get_asset_url('thumbs-up.svg'),className="box-icon"),
+                                    html.Div([
+                                        html.P("Socials",className="box-title"),
+                                        html.P("total kudos and comments received", className="box-subtitle"),
+                                    ])
+                                ]
+                            ),
+                            create_donut_graphique()
+                        ],
                     ),
                 ]
             ),
@@ -43,8 +55,19 @@ def create_dash_app(flask_app):
                 children=[
                     html.Div(
                         className="box",
-                        children=[html.P("Graphiques à venir ici", style={"color": "white"}),
-                                  html.A("Se déconnecter",href="/logout",style={"color":"red","font-weight": "bold"})
+                        children=[html.Div(
+                            className="box-header",
+                            children=[
+                                html.Img(src=dash.get_asset_url('thumbs-up.svg'),className="box-icon"),
+                                html.Div(
+                                    children=[
+                                        html.P("Socials", className="box-title"),
+                                        html.P("total kudos and comments received", className="box-subtitle")
+                                    ]
+                                )
+                                
+                            ]
+                        )
                                   ]
                     ),
                     html.Div(

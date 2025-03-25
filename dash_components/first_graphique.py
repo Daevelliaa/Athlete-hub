@@ -21,6 +21,7 @@ def create_graphique():
                             opacity=0.9
                             )],
             'layout': go.Layout(
+                barcornerradius=5,
                 xaxis={
                     
                     'tickvals': [0, 3, 6, 9,],

@@ -7,8 +7,6 @@ from dash_components.heatmap import generate_daily_heatmap
 def create_dash_app(flask_app):
     # Assurez-vous que Dash est correctement configuré avec Flask
     dash_app = dash.Dash(__name__,server=flask_app,routes_pathname_prefix='/dashboard/',)
-
-    graphique = create_graphique()
     
 
     # Définir la mise en page de Dash
@@ -29,7 +27,7 @@ def create_dash_app(flask_app):
                     ),
                     html.Div(
                         className="box",
-                        children=[graphique]
+                        children=[create_graphique()]
                     ),
                     html.Div(
                         className="box",

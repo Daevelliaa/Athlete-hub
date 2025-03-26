@@ -23,8 +23,10 @@ def create_dash_app(flask_app):
                 children=[
                     html.Div(
                         className="box1",
-                        children=[generate_daily_heatmap()]
+                        children=[]#generate_daily_heatmap()
                     ),
+
+                    #Item/Box pour les total hours per month
                     html.Div(
                         className="box",
                         children=[
@@ -38,9 +40,14 @@ def create_dash_app(flask_app):
                                     ])
                                 ]
                             ),
-                            create_graphique()
+                            html.Div(
+                                children=create_graphique(),
+                                className="graph-container",
+                            )
                         ]
                     ),
+
+                    #Item ou Box pour le nombre de jours de repos / jours actifs
                     html.Div(
                         className="box",
                         children=[
@@ -59,10 +66,13 @@ def create_dash_app(flask_app):
                     ),
                 ]
             ),
-                        # Div principale qui contient les 4 boîtes
+
+            # Div principale qui contient les 4 boîtes
             html.Div(
                 className="flex-container",  # Classe pour utiliser Flexbox
                 children=[
+
+                    #Item ou Box pour les kudos et commentaires 
                     html.Div(
                         className="box",
                         children=[html.Div(
@@ -76,6 +86,26 @@ def create_dash_app(flask_app):
                                     ]
                                 )
                                 
+                            ]
+
+                        ),
+                        html.Div(
+                            className="social-content",
+                            children=[
+                                html.Div(
+                                    className="social-content-item",
+                                    children=[
+                                        html.P("Kudos Count", className="kudos-count"),
+                                        html.P("993", className="kudos"),
+                                        html.P("kudos",className="kudos-text")],
+                                ),
+                                html.Div(
+                                    className="social-content-item",
+                                    children=[
+                                        html.P("Comment Count", className="kudos-count"),
+                                        html.P("145", className="kudos"),
+                                        html.P("comments",className="kudos-text")],
+                                )
                             ]
                         )
                                   ]

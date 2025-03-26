@@ -3,6 +3,7 @@ from dash import html
 from dash_components.first_graphique import create_graphique
 from dash_components.donut_chart import create_donut_graphique
 from dash_components.heatmap import generate_daily_heatmap
+from dash_components.first_scatter import scatter_distance_power
 
 def create_dash_app(flask_app):
     # Assurez-vous que Dash est correctement configuré avec Flask
@@ -110,9 +111,23 @@ def create_dash_app(flask_app):
                         )
                                   ]
                     ),
+
+                    #Le graph scatter avec power vs distance
                     html.Div(
                         className="box",
-                        children=[html.P("Graphiques à venir ici", style={"color": "white"})]
+                        children=[
+                            html.Div(
+                                className="box-header",
+                                children=[
+                                    html.Img(src=dash.get_asset_url('zap.svg'),className="box-icon"),
+                                    html.Div([
+                                        html.P("Distance vs. Power ", className="box-title"),
+                                        html.P("power output per distance", className="box-subtitle"),
+                                    ])
+                                ]
+                            ),
+                            scatter_distance_power()
+                        ]
                     ),
                     html.Div(
                         className="box",

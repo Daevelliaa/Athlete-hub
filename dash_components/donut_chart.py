@@ -26,6 +26,6 @@ def create_donut_graphique(active_days=234, rest_days=131):
     return dcc.Graph(
         id='donut-chart',
         figure=figure,
-        config={'displayModeBar': False},
+        config={'displayModeBar': False, 'responsive':True},
         style={'height': '100%', 'width': '100%'}
     )

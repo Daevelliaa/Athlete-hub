@@ -5,6 +5,7 @@ from dash_components.donut_chart import create_donut_graphique
 from dash_components.heatmap import generate_daily_heatmap
 from dash_components.first_scatter import scatter_distance_power
 from dash_components.scatter_PR import scatter_pr
+from dash_components.my_heatmap import heatmap
 
 def create_dash_app(flask_app):
     # Assurez-vous que Dash est correctement configuré avec Flask
@@ -25,7 +26,7 @@ def create_dash_app(flask_app):
                 children=[
                     html.Div(
                         className="box1",
-                        children=[]#generate_daily_heatmap()
+                        children=[heatmap()]#generate_daily_heatmap()
                     ),
 
                     #Item/Box pour les total hours per month

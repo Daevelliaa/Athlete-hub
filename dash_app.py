@@ -4,6 +4,7 @@ from dash_components.first_graphique import create_graphique
 from dash_components.donut_chart import create_donut_graphique
 from dash_components.heatmap import generate_daily_heatmap
 from dash_components.first_scatter import scatter_distance_power
+from dash_components.scatter_PR import scatter_pr
 
 def create_dash_app(flask_app):
     # Assurez-vous que Dash est correctement configuré avec Flask
@@ -131,7 +132,19 @@ def create_dash_app(flask_app):
                     ),
                     html.Div(
                         className="box",
-                        children=[html.P("Graphiques à venir ici", style={"color": "white"})]
+                        children=[
+                            html.Div(
+                                className="box-header",
+                                children=[
+                                    html.Img(src=dash.get_asset_url('medal.svg'),className="box-icon"),
+                                    html.Div([
+                                        html.P("PRs", className="box-title"),
+                                        html.P("prs achieved per month", className="box-subtitle"),
+                                    ])
+                                ]
+                            ),
+                            scatter_pr()
+                            ]
                     ),
                     html.Div(
                         className="box",

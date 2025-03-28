@@ -5,17 +5,25 @@ from datetime import datetime, date
 import calendar
 
 def heatmap():
-    
-    #z=np.random.rand(7,52)
-    z = [
-    np.random.randint(0,11,size=52).tolist(),  # ligne 1 (la première case est vide !)
-    np.random.randint(0,11,size=52).tolist(),
-    np.random.randint(0,11,size=52).tolist(),
-    np.random.randint(0,11,size=52).tolist(),
-    np.random.randint(0,11,size=52).tolist(),
-    np.random.randint(0,11,size=52).tolist(),    
-    [None]+np.random.randint(0,11,size=51).tolist(),      
-]
+
+    year=2022
+    today=datetime(year,1,1)
+    today1=datetime(year,12,31)
+    offset=today.weekday()
+    offset1=today1.weekday()
+
+    # Créer la première semaine
+    first_week = np.random.randint(0, 11, size=7 - offset).tolist() + [None] * offset
+
+    # Créer les 50 semaines complètes
+    middle_weeks = [np.random.randint(0, 11, size=7).tolist() for _ in range(51)]
+
+    # Créer la dernière semaine
+    last_week = [None] * (6 - offset1) + np.random.randint(0, 11, size=offset1 + 1).tolist()  
+
+    z=[first_week] + middle_weeks + [last_week]  #quand on met les crochets la liste est transformé en sous liste
+        
+    z=np.transpose(z)
 
     figure=go.Figure()
 
@@ -63,5 +71,3 @@ def heatmap():
         config={'displayModeBar':False,'responsive':True},
     )
 
-today=datetime(2024,12,31)
-print(today.weekday())

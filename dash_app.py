@@ -6,6 +6,8 @@ from dash_components.first_scatter import scatter_distance_power
 from dash_components.scatter_PR import scatter_pr
 from dash_components.my_heatmap import heatmap
 from dash_components.start_time_scatter import scatter_start_time
+from dash_components.total_hours_donut import total_hours_donut
+from dash_components.scatter_HR_speed import scatter_hr_speed
 
 def create_dash_app(flask_app):
     # Assurez-vous que Dash est correctement configuré avec Flask
@@ -29,7 +31,7 @@ def create_dash_app(flask_app):
                         children=[heatmap()]
                     ),
 
-                    #Item/Box pour les total hours per month
+                    #Item/Box pour les total hours per month 
                     html.Div(
                         className="box",
                         children=[
@@ -108,7 +110,9 @@ def create_dash_app(flask_app):
                                         html.P("Comment Count", className="kudos-count"),
                                         html.P("145", className="kudos"),
                                         html.P("comments",className="kudos-text")],
-                                )
+                                ),
+                                
+
                             ]
                         )
                                   ]
@@ -179,17 +183,17 @@ def create_dash_app(flask_app):
                 className="flex-container",  # Classe pour utiliser Flexbox
                 children=[
 
-                    #Item ou Box avec un donut chart qui correspondra aux total Hours par sport je pense 
+                    #Item ou Box avec un donut qui correspondra aux total Hours par sport je pense 
                     html.Div(
                         className="box",
                         children=[html.Div(
                             className="box-header",
                             children=[
-                                html.Img(src=dash.get_asset_url('watch.svg'),className="box-icon"),
+                                html.Img(src=dash.get_asset_url('trophy.svg'),className="box-icon"),
                                 html.Div(
                                     children=[
-                                        html.P("Total Hours", className="box-title"),
-                                        html.P("total hours spent per sport", className="box-subtitle")
+                                        html.P("Records", className="box-title"),
+                                        html.P("your top stats", className="box-subtitle")
                                     ]
                                 )
                                 
@@ -197,22 +201,50 @@ def create_dash_app(flask_app):
 
                         ),
                         html.Div(
-                            className="social-content",
+                            className="record-content",
                             children=[
                                 html.Div(
-                                    className="social-content-item",
+                                    className="record-content-item",
                                     children=[
-                                        html.P("Kudos Count", className="kudos-count"),
-                                        html.P("993", className="kudos"),
-                                        html.P("kudos",className="kudos-text")],
+                                        html.P("Top Speed", className="kudos-count"),
+                                        html.P("72", className="kudos"),
+                                        html.P("km/h",className="kudos-text")],
                                 ),
                                 html.Div(
-                                    className="social-content-item",
+                                    className="record-content-item",
                                     children=[
-                                        html.P("Comment Count", className="kudos-count"),
-                                        html.P("145", className="kudos"),
-                                        html.P("comments",className="kudos-text")],
-                                )
+                                        html.P("Max Watts", className="kudos-count"),
+                                        html.P("1200", className="kudos"),
+                                        html.P("W",className="kudos-text")],
+                                ),
+                                html.Div(
+                                    className="record-content-item",
+                                    children=[
+                                        html.P("Highest Heartrate", className="kudos-count"),
+                                        html.P("210", className="kudos"),
+                                        html.P("bpm",className="kudos-text")],
+                                ),
+                                html.Div(
+                                    className="record-content-item",
+                                    children=[
+                                        html.P("Most Elevation Gain", className="kudos-count"),
+                                        html.P("2300", className="kudos"),
+                                        html.P("m",className="kudos-text")],
+                                ),
+                                html.Div(
+                                    className="record-content-item",
+                                    children=[
+                                        html.P("Prs", className="kudos-count"),
+                                        html.P("42", className="kudos"),
+                                        html.P("prs",className="kudos-text")],
+                                ),
+                                html.Div(
+                                    className="record-content-item",
+                                    children=[
+                                        html.P("Athletes", className="kudos-count"),
+                                        html.P("900", className="kudos"),
+                                        html.P("people",className="kudos-text")],
+                                ),
                             ]
                         )
                                   ]
@@ -225,14 +257,14 @@ def create_dash_app(flask_app):
                             html.Div(
                                 className="box-header",
                                 children=[
-                                    html.Img(src=dash.get_asset_url('heart-pulse.svg'),className="box-icon"),
+                                    html.Img(src=dash.get_asset_url('watch.svg'),className="box-icon"),
                                     html.Div([
-                                        html.P("Heartrate vs. Speed ", className="box-title"),
-                                        html.P("heartrate compared to speed", className="box-subtitle"),
+                                        html.P("Total Hours ", className="box-title"),
+                                        html.P("total hours spent per sport", className="box-subtitle"),
                                     ])
                                 ]
                             ),
-                            #scatter_distance_power()
+                            total_hours_donut()
                         ]
                     ),
 
@@ -244,14 +276,14 @@ def create_dash_app(flask_app):
                             html.Div(
                                 className="box-header",
                                 children=[
-                                    html.Img(src=dash.get_asset_url('trophy.svg'),className="box-icon"),
+                                    html.Img(src=dash.get_asset_url('heart-pulse.svg'),className="box-icon"),
                                     html.Div([
-                                        html.P("Records", className="box-title"),
-                                        html.P("your top stats", className="box-subtitle"),
+                                        html.P("Heartrate vs. Speed", className="box-title"),
+                                        html.P("heartrate compared to speed", className="box-subtitle"),
                                     ])
                                 ]
                             ),
-                            #scatter_pr()
+                            scatter_hr_speed()
                             ]
                     ),
 

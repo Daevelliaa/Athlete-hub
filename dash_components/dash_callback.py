@@ -6,6 +6,7 @@ import time
 import flask
 from auth.strava_api import get_strava_activities
 from dash_components.first_graphique import create_graphique
+from dash import no_update, html
 
 def register_callbacks(dash_app):
 
@@ -54,19 +55,21 @@ def register_callbacks(dash_app):
     @dash_app.callback(
         #id du dcc.Graph Bar-chart
         Output('Bar_chart', 'figure'),
+        Output('Bar_chart', 'style'),
         Input('activities_2024','data')
     )
     def update_bar_chart(activities):
         if not activities:
-            return go.Figure()
+            return html.H3("Loading...", style={'textAlign': 'center', 'marginTop': '50px'})
         
         #Convertir la liste en DataFrame
         df=pd.DataFrame(activities)
 
         #On garde les colonnes utiles 
-        if 'start_date' not in df or 'distance' not in df:
-            return go.Figure()
+        if 'start_date' not in df:
+            return html.H3("Loading...", style={'textAlign': 'center', 'marginTop': '50px'})
+
         
         # Appeler ta fonction personnalisée
-        return create_graphique(df)
+        return create_graphique(df), {'width': '100%', 'height': '100%', 'display': 'block'}
          

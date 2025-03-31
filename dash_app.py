@@ -52,12 +52,12 @@ def create_dash_app(flask_app):
                             ),
                             html.Div(
                                 className="graph-container",
-                                children=dcc.Graph(
+                                children=
+                                dcc.Graph(
                                     id='Bar_chart',
-                                    figure={},
                                     config={'displayModeBar': False, 'responsive': True},
-                                    style={'width': '100%', 'height': '100%'}
-                                )
+                                    style={'width': '100%', 'height': '100%', 'display':'none'}
+                                ),
                             )
                         ]
                     ),

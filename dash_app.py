@@ -45,7 +45,7 @@ def create_dash_app(flask_app):
                                 children=[
                                     html.Img(src=dash.get_asset_url('rocket.svg'), className="box-icon"),
                                     html.Div([
-                                        html.P("Total Hours", className="box-title"),
+                                        html.P("Total Distance", className="box-title"),
                                         html.P("total distance per month", className="box-subtitle"),
                                     ])
                                 ]

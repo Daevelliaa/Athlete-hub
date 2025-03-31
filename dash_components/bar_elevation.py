@@ -1,27 +1,17 @@
 import plotly.graph_objs as go
 from dash import dcc
-import pandas as pd
 
-def create_graphique(df):
-    #ajouter une colonne mois au dataframe des activités
-    df['start_date']=pd.to_datetime(df['start_date'])
-    df['mois']=df['start_date'].dt.month
-
-    # Grouper les distances par mois
-    monthly_km = df.groupby('mois')['distance'].sum() / 1000  # m → km
-    
+def bar_elevation():
     # Données des kilomètres parcourus chaque mois
     mois = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-    y_values = [monthly_km.get(i, 0) for i in range(1, 13)]
-    text_values = [str(int(km)) for km in y_values]
+    kilometre = [1600, 1546, 5963, 6301, 5305, 6006, 7208, 8104, 6506, 7405, 8010, 8960]
 
     figure=go.Figure(
         data=[go.Bar(
             name='mois vs kilomètres',
-            text=text_values,
+            text=kilometre,
             x=mois,
-            y=y_values,
+            y=kilometre,
             textposition='outside',
             marker=dict(color='#5FB49C',line=dict(color='black',width=0.5)),
             textfont=dict(color='white',family='SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace', size=15),
@@ -31,8 +21,8 @@ def create_graphique(df):
     figure.update_layout(
         barcornerradius=5,
         xaxis=dict(
-            tickvals=[0, 3, 6, 9],
-            ticktext=['Janvier', 'Avril', 'Juillet', 'Octobre'],
+            tickvals=[2, 5, 8, 11],
+            ticktext=['Mars', 'Juin', 'Septembre', 'Décembre'],
             showgrid=False,
             zeroline=False,
             showline=True,
@@ -54,7 +44,11 @@ def create_graphique(df):
         showlegend=False,
         margin=dict(t=60, b=30, l=30, r=30),
     )
-    return figure
-        
+    return dcc.Graph(
+        id='Bar_elevation',
+        figure=figure,
+        config={'displayModeBar': False, 'responsive':True},
+        style={'width': '100%', 'height': '100%'} #responsive donc toute la taille de la box 
+    )
 
 

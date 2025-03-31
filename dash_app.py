@@ -1,5 +1,6 @@
 import dash
-from dash import html
+from dash import html, dcc
+
 from dash_components.first_graphique import create_graphique
 from dash_components.donut_chart import create_donut_graphique
 from dash_components.first_scatter import scatter_distance_power
@@ -8,10 +9,12 @@ from dash_components.my_heatmap import heatmap
 from dash_components.start_time_scatter import scatter_start_time
 from dash_components.total_hours_donut import total_hours_donut
 from dash_components.scatter_HR_speed import scatter_hr_speed
+from dash_components.bar_elevation import bar_elevation
 
 def create_dash_app(flask_app):
     # Assurez-vous que Dash est correctement configuré avec Flask
     dash_app = dash.Dash(__name__,server=flask_app,routes_pathname_prefix='/dashboard/',)
+    
     
 
     # Définir la mise en page de Dash
@@ -19,7 +22,9 @@ def create_dash_app(flask_app):
         id='dash-container',  # Appliquer une classe CSS style.css stocké dans assets
         children=[
             # Titre de la page
-            html.P("Bienvenue dans ton Dashboard", style={"text-align": "left"}),
+            dcc.Store(id='athlete_store'),
+            dcc.Store(id="activities_2024"),
+            html.P(id='welcome-text', style={"text-align": "left"}),
 
 
             # Div principale qui contient les 4 boîtes
@@ -46,8 +51,13 @@ def create_dash_app(flask_app):
                                 ]
                             ),
                             html.Div(
-                                children=create_graphique(),
                                 className="graph-container",
+                                children=dcc.Graph(
+                                    id='Bar_chart',
+                                    figure={},
+                                    config={'displayModeBar': False, 'responsive': True},
+                                    style={'width': '100%', 'height': '100%'}
+                                )
                             )
                         ]
                     ),
@@ -301,7 +311,7 @@ def create_dash_app(flask_app):
                                     ])
                                 ]
                             ),
-                            #scatter_start_time()
+                            bar_elevation()
                         ]
                                   
                     ),

@@ -23,6 +23,12 @@ def callback():
         return "Erreur: Aucun code reçu de Strava"
     
     token_data=exchange_code_access_token(code)
+
+    try:
+        token_data = exchange_code_access_token(code)
+    except Exception as e:
+        print(f"[ERREUR CALLBACK] Problème lors de l'échange du code : {e}")
+        return "Erreur lors de l'authentification avec Strava.", 500
     
     #stockage dans la session
     session['access_token']=token_data['access_token']

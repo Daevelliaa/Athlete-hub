@@ -7,19 +7,10 @@ with open("activities_2024.json", 'r', encoding='utf-8') as f:
 
 df=pd.DataFrame(data)
 
-# Assure-toi que la colonne est bien datetime
-df['start_date'] = pd.to_datetime(df['start_date'])
+# Étape 2 : Grouper par type d’activité et faire la somme
+time_by_activity = (df.groupby('type')['moving_time'].sum()/3600).astype(int)
 
-# Optionnel : filtrer uniquement l'année 2024
-df_2024 = df[df['start_date'].dt.year == 2024]
+# Optionnel : trier du plus long au plus court
+time_by_activity = time_by_activity.sort_values(ascending=False)
 
-# Extraire le mois et on créé une colonne avec les mois 1 à 12
-df_2024['month'] = df_2024['start_date'].dt.month
-
-# Grouper par mois et sommer les pr_count
-monthly_pr = df_2024.groupby('month')['pr_count'].sum()
-
-# Assure que tous les mois sont présents (même avec 0 PR)
-monthly_pr = monthly_pr.reindex(range(1, 13), fill_value=0)
-
-print(monthly_pr)
+print(time_by_activity)

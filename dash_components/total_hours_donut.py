@@ -1,10 +1,32 @@
 import plotly.graph_objects as go
 from dash import dcc
+import pandas as pd
 
-def total_hours_donut(ride_hours=200, virtual_ride_hours=100, run_hours=150):
-    labels = ['Ride', 'VirtualRide', 'Run']
-    values = [ride_hours, virtual_ride_hours, run_hours]
-    colors = ['#5FB49C', '#0C7489', '#16324F']  # Tu peux adapter à ton thème
+def total_hours_donut(df):
+
+    df=df.copy()
+    # Étape 2 : Grouper par type d’activité et faire la somme
+    time_by_activity = (df.groupby('type')['moving_time'].sum()/3600).astype(int)
+
+    # Optionnel : trier du plus long au plus court
+    time_by_activity = time_by_activity.sort_values(ascending=False)
+
+    labels = time_by_activity.index.tolist()
+    values = time_by_activity.values.tolist()
+
+    custom_colors = [
+    "#5FB49C",  # vert pastel
+    "#0C7489",  # bleu pétrole
+    "#16324F",  # bleu foncé
+    "#F4D06F",  # jaune moutarde
+    "#FF6F59",  # rouge corail
+    "#885053",  # vieux rose
+    "#96ADC8",  # lavande froide
+    "#2A2D34",  # noir bleuté
+    "#E8DAB2",  # beige clair
+    "#C8553D",  # terre cuite
+]
+    colors = custom_colors[:len(labels)]
 
     figure = go.Figure()
 
@@ -18,7 +40,8 @@ def total_hours_donut(ride_hours=200, virtual_ride_hours=100, run_hours=150):
             colors=colors,
             line=dict(color='white', width=1)
         ),
-        sort=False  # Pour garder l'ordre donné
+        sort=False,
+        domain=dict(x=[0.2, 0.8], y=[0.1, 0.8])  #le domaine du donut de la figure
     ))
 
     figure.update_layout(
@@ -30,14 +53,13 @@ def total_hours_donut(ride_hours=200, virtual_ride_hours=100, run_hours=150):
             orientation='h',
             x=0.5,
             xanchor='center',
-            y=-0.1
+            y=-0.2,
+            traceorder='normal',      # ✅ Assure l’ordre logique (important !)
+            font=dict(size=11),
+            itemwidth=40,             # ✅ Largeur max par item
+            valign='middle'
         ),
-        margin=dict(t=80, b=80, l=80, r=80)
+        margin=dict(t=20, b=20, l=20, r=20)
     )
 
-    return dcc.Graph(
-        id='total-hours-donut-chart',
-        figure=figure,
-        config={'displayModeBar': False, 'responsive': True},
-        style={'height': '100%', 'width': '100%'}
-    )
+    return figure

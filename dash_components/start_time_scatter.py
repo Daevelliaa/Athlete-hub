@@ -1,10 +1,18 @@
 import plotly.graph_objects as go 
 from dash import dcc
+import pandas as pd
 
-def scatter_start_time():
+def scatter_start_time(df):
 
-    mois = list(range(24))
-    pr=[0,0,0,0,0,0,5,8,15,26,41,31,32,45,12,16,13,56,43,13,10,9,4,0]
+    df=df.copy()
+    df['start_date']=pd.to_datetime(df['start_date'])
+    df_hour=df['start_date'].dt.hour
+
+    hour_counts=df_hour.value_counts().sort_index()
+    hour_counts = hour_counts.reindex(range(24), fill_value=0)
+
+    mois = hour_counts.index
+    pr=hour_counts.values
 
     figure=go.Figure()
 
@@ -56,9 +64,4 @@ def scatter_start_time():
         margin=dict(t=30, b=30, l=30, r=30),
 
     )
-
-    return dcc.Graph(
-        figure=figure, 
-        config={'displayModeBar':False, 'responsive':True},
-        style={'width': '100%', 'height': '100%'}
-    )
+    return figure

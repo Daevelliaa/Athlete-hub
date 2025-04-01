@@ -9,6 +9,8 @@ from dash_components.first_graphique import create_graphique
 from dash_components.donut_chart import create_donut_graphique
 from dash_components.first_scatter import scatter_distance_power
 from dash_components.scatter_PR import scatter_pr
+from dash_components.start_time_scatter import scatter_start_time
+from dash_components.total_hours_donut import total_hours_donut
 from dash import no_update, html
 
 def register_callbacks(dash_app):
@@ -79,13 +81,17 @@ def register_callbacks(dash_app):
         Output('scatter_power_distance', 'style'),
         Output('Scatter_PR', 'figure'),
         Output('Scatter_PR', 'style'),
+        Output('Scatter_start', 'figure'),
+        Output('Scatter_start', 'style'),
+        Output('donut_total_hours', 'figure'),
+        Output('donut_total_hours', 'style'),
         Input('activities_2024','data')
     )
     def update_bar_chart(activities):
         if not activities:
             fig=loading_fig()
             style = {'width': '100%', 'height': '100%', 'display': 'block'}
-            return fig, style, fig, style,"0","0",fig,style,fig,style
+            return fig, style, fig, style,"0","0",fig,style,fig,style,fig,style,fig,style
 
         
         #Convertir la liste en DataFrame
@@ -95,15 +101,18 @@ def register_callbacks(dash_app):
         if 'start_date' not in df:
             fig = loading_fig()
             style = {'width': '100%', 'height': '100%', 'display': 'block'}
-            return fig, style, fig, style,"0","0",fig,style,fig,style
+            return fig, style, fig, style,"0","0",fig,style,fig,style,fig,style,fig,style
 
         bar_fig = create_graphique(df)
         donut_fig = create_donut_graphique(df)
         scatter_power_distance=scatter_distance_power(df)
         scatter_pr_month=scatter_pr(df)
+        scatter_start=scatter_start_time(df)
+        donut_total_hours=total_hours_donut(df)
+
         style = {'width': '100%', 'height': '100%', 'visibility': 'visible'}
         total_kudos=df['kudos_count'].sum() if 'kudos_count'in df else 0
         total_comments = df['comment_count'].sum() if 'comment_count' in df else 0
 
-        return bar_fig, style, donut_fig, style, str(total_kudos),str(total_comments), scatter_power_distance, style, scatter_pr_month, style
+        return bar_fig, style, donut_fig, style, str(total_kudos),str(total_comments), scatter_power_distance, style, scatter_pr_month, style,scatter_start,style,donut_total_hours,style
          

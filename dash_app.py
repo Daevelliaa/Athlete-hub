@@ -190,7 +190,12 @@ def create_dash_app(flask_app):
                                     ])
                                 ]
                             ),
-                            scatter_start_time()
+                            dcc.Graph(
+                                id='Scatter_start',
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'height': '100%', 'visibility': 'hidden'},
+
+                            ),
                         ]
                                   
                     ),
@@ -284,7 +289,11 @@ def create_dash_app(flask_app):
                                     ])
                                 ]
                             ),
-                            total_hours_donut()
+                            dcc.Graph(
+                                id='donut_total_hours',
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'height': '100%', 'visibility': 'hidden'},
+                            ),
                         ]
                     ),
 

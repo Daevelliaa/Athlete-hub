@@ -1,19 +1,37 @@
 import plotly.graph_objects as go 
 from dash import dcc
+import pandas as pd
 
-def scatter_pr():
+def scatter_pr(df):
+
+    df=df.copy()
+    # Assure-toi que la colonne est bien datetime
+    df['start_date'] = pd.to_datetime(df['start_date'])
+
+    # Optionnel : filtrer uniquement l'année 2024
+    df_2024 = df[df['start_date'].dt.year == 2024]
+
+    # Extraire le mois et on créé une colonne avec les mois 1 à 12
+    df_2024['month'] = df_2024['start_date'].dt.month
+
+    # Grouper par mois et sommer les pr_count
+    monthly_pr = df_2024.groupby('month')['pr_count'].sum()
+
+    # Assure que tous les mois sont présents (même avec 0 PR)
+    monthly_pr = monthly_pr.reindex(range(1, 13), fill_value=0)
+
+
 
     mois = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    pr=[100,50,120,59,48,36,75,89,76,141,15,21]
 
     figure=go.Figure()
 
     figure.add_trace(
         go.Scatter(
             x=mois,
-            y=pr,
+            y=monthly_pr.values,
             mode="lines+markers+text",
-            text=pr,
+            text=monthly_pr.values,
             textposition='top center',
             textfont=dict(
                 color='white',
@@ -56,9 +74,4 @@ def scatter_pr():
         margin=dict(t=30, b=30, l=30, r=30),
 
     )
-
-    return dcc.Graph(
-        figure=figure, 
-        config={'displayModeBar':False, 'responsive':True},
-        style={'width': '100%', 'height': '100%'}
-    )
+    return figure

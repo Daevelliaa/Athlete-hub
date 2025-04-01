@@ -1,7 +1,16 @@
 import plotly.graph_objects as go
 from dash import dcc
+import pandas as pd
 
-def create_donut_graphique(active_days=234, rest_days=131):
+def create_donut_graphique(df):
+
+    df=df.copy()
+    df['start_date']=pd.to_datetime(df['start_date'])
+    df["start_date"]=df['start_date'].dt.date
+
+    active_days=len(set(df['start_date']))
+    rest_days=365-active_days
+
     figure = go.Figure(
         data=[go.Pie(labels=['active', 'rest'],
             values=[active_days, rest_days],
@@ -22,10 +31,5 @@ def create_donut_graphique(active_days=234, rest_days=131):
         margin=dict(t=20, b=20, l=20, r=20)
     )
 
-    # ⬇️ On retourne directement le composant Dash prêt à être affiché
-    return dcc.Graph(
-        id='donut-chart',
-        figure=figure,
-        config={'displayModeBar': False, 'responsive':True},
-        style={'height': '100%', 'width': '100%'}
-    )
+    return figure
+

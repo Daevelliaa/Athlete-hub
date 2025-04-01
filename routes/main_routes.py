@@ -21,8 +21,6 @@ def callback():
     code = request.args.get('code')
     if not code:
         return "Erreur: Aucun code reçu de Strava"
-    
-    token_data=exchange_code_access_token(code)
 
     try:
         token_data = exchange_code_access_token(code)

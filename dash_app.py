@@ -50,15 +50,12 @@ def create_dash_app(flask_app):
                                     ])
                                 ]
                             ),
-                            html.Div(
-                                className="graph-container",
-                                children=
                                 dcc.Graph(
                                     id='Bar_chart',
                                     config={'displayModeBar': False, 'responsive': True},
-                                    style={'width': '100%', 'height': '100%', 'display':'none'}
+                                    style={'width': '100%', 'height': '100%', 'visibility': 'hidden'}
                                 ),
-                            )
+                            
                         ]
                     ),
 
@@ -76,7 +73,12 @@ def create_dash_app(flask_app):
                                     ])
                                 ]
                             ),
-                            create_donut_graphique()
+                                dcc.Graph(
+                                    id='Donut_first_chart',
+                                    config={'displayModeBar': False, 'responsive': True},
+                                    style={'width': '100%', 'height': '100%', 'visibility': 'hidden'}
+                                ),
+                            
                         ]
                     ),
                 ]
@@ -111,14 +113,14 @@ def create_dash_app(flask_app):
                                     className="social-content-item",
                                     children=[
                                         html.P("Kudos Count", className="kudos-count"),
-                                        html.P("993", className="kudos"),
-                                        html.P("kudos",className="kudos-text")],
+                                        html.P("", id='kudos-count-text', className="kudos"),
+                                        html.P("kudos", className="kudos-text")],
                                 ),
                                 html.Div(
                                     className="social-content-item",
                                     children=[
                                         html.P("Comment Count", className="kudos-count"),
-                                        html.P("145", className="kudos"),
+                                        html.P("",id='comment-count-text', className="kudos"),
                                         html.P("comments",className="kudos-text")],
                                 ),
                                 
@@ -142,7 +144,11 @@ def create_dash_app(flask_app):
                                     ])
                                 ]
                             ),
-                            scatter_distance_power()
+                            dcc.Graph(
+                                id='scatter_power_distance',
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'height': '100%', 'visibility': 'hidden'}
+                            ),
                         ]
                     ),
 
@@ -161,7 +167,11 @@ def create_dash_app(flask_app):
                                     ])
                                 ]
                             ),
-                            scatter_pr()
+                            dcc.Graph(
+                                id='Scatter_PR',
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'height': '100%', 'visibility': 'hidden'}
+                            ),
                             ]
                     ),
 

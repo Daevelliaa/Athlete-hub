@@ -32,6 +32,7 @@ def create_graphique(df):
     ))
         
     figure.update_layout(
+        uirevision=False,
         barcornerradius=5,
         xaxis=dict(
             tickvals=[0, 3, 6, 9],

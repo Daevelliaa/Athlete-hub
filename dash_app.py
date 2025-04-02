@@ -23,8 +23,32 @@ def create_dash_app(flask_app):
         children=[
             # Titre de la page
             dcc.Store(id='athlete_store'),
-            dcc.Store(id="activities_2024"),
-            html.P(id='welcome-text', style={"text-align": "left"}),
+            #dcc.Store(id="activities_2024"),
+            html.Div(
+                style={
+                    'display': 'flex',
+                    'justifyContent': 'space-around',
+                    'alignItems': 'center',
+                    },
+                    children=[
+                        html.P(id='welcome-text', style={"text-align": "left"}),
+                        dcc.Dropdown(
+                            id='year-selector',
+                            options=[{'label': str(year), 'value': year} for year in range(2018, 2026)],
+                            value=2024,
+                            placeholder="Choisir une année",
+                            clearable=False,
+                            style={
+                                'width': '200px',
+                                'color': 'black'    
+                                },
+            ),
+            dcc.Store(id='yearly_activities_store'),
+
+                    ]
+            ),
+            
+            
 
 
             # Div principale qui contient les 4 boîtes

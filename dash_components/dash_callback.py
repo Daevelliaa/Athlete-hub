@@ -1,4 +1,4 @@
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 from datetime import datetime
 import plotly.graph_objs as go
 import pandas as pd
@@ -35,48 +35,48 @@ def register_callbacks(dash_app):
         return flask.session.get('athlete')
 
 
-    @dash_app.callback(
-    Output('activities_2024', 'data'),
-    Input('athlete_store', 'data')  # On déclenche le chargement quand l'utilisateur est connecté
-)
-    def load_activities_2024(athlete):
-        if not athlete:
-            return []
 
-        token = flask.session.get('access_token')
-
-        # Timestamp début 2024 et fin 2024
-        after = int(time.mktime(datetime(2024, 1, 1).timetuple()))
-        before = int(time.mktime(datetime(2025, 1, 1).timetuple()))
-
-        activities = get_strava_activities(token, after, before)
-       
-        return activities
 
     @dash_app.callback(
         Output('welcome-text', 'children'),
-        Input('athlete_store', 'data'),        # ← ici tu dois recevoir un DICTIONNAIRE
-        Input('activities_2024', 'data')       # ← ici tu reçois une LISTE
+        Input('athlete_store', 'data'),        # ← ici tu dois recevoir un DICTIONNAIRE      
     )
-    def update_welcome_message(athlete, activities):
+    def update_welcome_message(athlete):
         #print("Athlete =", athlete)
         #print("Activities =", activities)
 
         if athlete:
             prenom = athlete.get('firstname', 'Athlète')
             nom = athlete.get('lastname', '')
-            count = len(activities) if activities else 0
-            return f"Bienvenue {prenom} {nom} 👋 — Tu as {count} activités en 2024 !"
+            return f"Bienvenue {prenom} {nom} 👋"
         return "Bienvenue dans ton Dashboard"
     
+
     @dash_app.callback(
-        #id du dcc.Graph Bar-chart
+        Output('yearly_activities_store', 'data'),
+        Input('athlete_store', 'data'),            # ⬅️ déclenche au chargement utilisateur
+        Input('year-selector', 'value')            # ⬅️ on lit l’année par défaut
+    )
+    def load_activities_for_year(athlete, selected_year):
+        if not athlete or not selected_year:
+            return []
+
+        token = flask.session.get('access_token')
+        after = int(time.mktime(datetime(selected_year, 1, 1).timetuple()))
+        before = int(time.mktime(datetime(selected_year + 1, 1, 1).timetuple()))
+    
+        activities = get_strava_activities(token, after, before)
+        return activities
+
+
+
+    @dash_app.callback(
         Output('Bar_chart', 'figure'),
         Output('Bar_chart', 'style'),
-        Output('Donut_first_chart','figure'),
-        Output('Donut_first_chart','style'),
-        Output('kudos-count-text','children'),
-        Output('comment-count-text','children'),
+        Output('Donut_first_chart', 'figure'),
+        Output('Donut_first_chart', 'style'),
+        Output('kudos-count-text', 'children'),
+        Output('comment-count-text', 'children'),
         Output('scatter_power_distance', 'figure'),
         Output('scatter_power_distance', 'style'),
         Output('Scatter_PR', 'figure'),
@@ -85,34 +85,31 @@ def register_callbacks(dash_app):
         Output('Scatter_start', 'style'),
         Output('donut_total_hours', 'figure'),
         Output('donut_total_hours', 'style'),
-        Input('activities_2024','data')
+        Input('yearly_activities_store', 'data')
     )
-    def update_bar_chart(activities):
+
+    def update_graphs(activities):
         if not activities:
-            fig=loading_fig()
+            fig = loading_fig()
             style = {'width': '100%', 'height': '100%', 'display': 'block'}
-            return fig, style, fig, style,"0","0",fig,style,fig,style,fig,style,fig,style
+            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style
 
-        
-        #Convertir la liste en DataFrame
-        df=pd.DataFrame(activities)
-
-        #On garde les colonnes utiles 
+        df = pd.DataFrame(activities)
         if 'start_date' not in df:
             fig = loading_fig()
             style = {'width': '100%', 'height': '100%', 'display': 'block'}
-            return fig, style, fig, style,"0","0",fig,style,fig,style,fig,style,fig,style
+            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style
 
+        # Génération des graphes
         bar_fig = create_graphique(df)
         donut_fig = create_donut_graphique(df)
-        scatter_power_distance=scatter_distance_power(df)
-        scatter_pr_month=scatter_pr(df)
-        scatter_start=scatter_start_time(df)
-        donut_total_hours=total_hours_donut(df)
+        scatter_power_distance = scatter_distance_power(df)
+        scatter_pr_month = scatter_pr(df)
+        scatter_start = scatter_start_time(df)
+        donut_total_hours = total_hours_donut(df)
 
         style = {'width': '100%', 'height': '100%', 'visibility': 'visible'}
-        total_kudos=df['kudos_count'].sum() if 'kudos_count'in df else 0
+        total_kudos = df['kudos_count'].sum() if 'kudos_count' in df else 0
         total_comments = df['comment_count'].sum() if 'comment_count' in df else 0
 
-        return bar_fig, style, donut_fig, style, str(total_kudos),str(total_comments), scatter_power_distance, style, scatter_pr_month, style,scatter_start,style,donut_total_hours,style
-         
+        return bar_fig, style, donut_fig, style, str(total_kudos), str(total_comments), scatter_power_distance, style, scatter_pr_month, style, scatter_start, style, donut_total_hours, style

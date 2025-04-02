@@ -4,20 +4,18 @@ import pandas as pd
 
 def scatter_pr(df):
 
-    df=df.copy()
-    # Assure-toi que la colonne est bien datetime
+    df = df.copy()
+
+    # S'assurer que la colonne est en datetime
     df['start_date'] = pd.to_datetime(df['start_date'])
 
-    # Optionnel : filtrer uniquement l'année 2024
-    df_2024 = df[df['start_date'].dt.year == 2024]
-
-    # Extraire le mois et on créé une colonne avec les mois 1 à 12
-    df_2024['month'] = df_2024['start_date'].dt.month
+    # Extraire le mois dans une nouvelle colonne
+    df['month'] = df['start_date'].dt.month
 
     # Grouper par mois et sommer les pr_count
-    monthly_pr = df_2024.groupby('month')['pr_count'].sum()
+    monthly_pr = df.groupby('month')['pr_count'].sum()
 
-    # Assure que tous les mois sont présents (même avec 0 PR)
+    # Remplir les mois manquants avec 0
     monthly_pr = monthly_pr.reindex(range(1, 13), fill_value=0)
 
 
@@ -54,6 +52,7 @@ def scatter_pr(df):
         plot_bgcolor='rgba(0,0,0,0)',
         xaxis=dict(
             showgrid=False,
+            zeroline=False,
             showline=True,
             tickvals=[0,3,6,9],
             ticktext=["Janvier","Avril","Juillet","Octobre"],
@@ -67,6 +66,7 @@ def scatter_pr(df):
         
         ),
         yaxis=dict(
+            zeroline=False,
             showgrid=False,
             showline=False,
             showticklabels=False,

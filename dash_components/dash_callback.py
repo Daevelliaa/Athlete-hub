@@ -11,6 +11,8 @@ from dash_components.first_scatter import scatter_distance_power
 from dash_components.scatter_PR import scatter_pr
 from dash_components.start_time_scatter import scatter_start_time
 from dash_components.total_hours_donut import total_hours_donut
+from dash_components.scatter_HR_speed import scatter_hr_speed
+from dash_components.bar_elevation import bar_elevation
 from dash import no_update, html
 
 def register_callbacks(dash_app):
@@ -85,6 +87,16 @@ def register_callbacks(dash_app):
         Output('Scatter_start', 'style'),
         Output('donut_total_hours', 'figure'),
         Output('donut_total_hours', 'style'),
+        Output('top_speed','children'),
+        Output('max_watts','children'),
+        Output('highest_heartrate','children'),
+        Output('most_elevation','children'),
+        Output('pr','children'),
+        Output('athlete','children'),
+        Output('scatter_hr_speed', 'figure'),
+        Output('scatter_hr_speed', 'style'),
+        Output('elevation', 'figure'),
+        Output('elevation', 'style'),
         Input('yearly_activities_store', 'data')
     )
 
@@ -92,13 +104,13 @@ def register_callbacks(dash_app):
         if not activities:
             fig = loading_fig()
             style = {'width': '100%', 'height': '100%', 'display': 'block'}
-            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style
+            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style,"0","0","0","0","0","0",fig,style,fig,style
 
         df = pd.DataFrame(activities)
         if 'start_date' not in df:
             fig = loading_fig()
             style = {'width': '100%', 'height': '100%', 'display': 'block'}
-            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style
+            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style,"0","0","0","0","0","0",fig,style,fig,style
 
         # Génération des graphes
         bar_fig = create_graphique(df)
@@ -107,9 +119,17 @@ def register_callbacks(dash_app):
         scatter_pr_month = scatter_pr(df)
         scatter_start = scatter_start_time(df)
         donut_total_hours = total_hours_donut(df)
+        hr_speed=scatter_hr_speed(df)
+        elevation=bar_elevation(df)
 
         style = {'width': '100%', 'height': '100%', 'visibility': 'visible'}
         total_kudos = df['kudos_count'].sum() if 'kudos_count' in df else 0
         total_comments = df['comment_count'].sum() if 'comment_count' in df else 0
+        top_speed = round(df["max_speed"].max() * 3.6, 1)
+        max_watts=df["max_watts"].max()
+        high_heart=df["max_heartrate"].max()
+        most_elevation=df["total_elevation_gain"].max()
+        most_pr=df["pr_count"].sum()
+        kilojoules=df["kilojoules"].max()
 
-        return bar_fig, style, donut_fig, style, str(total_kudos), str(total_comments), scatter_power_distance, style, scatter_pr_month, style, scatter_start, style, donut_total_hours, style
+        return bar_fig, style, donut_fig, style, str(total_kudos), str(total_comments), scatter_power_distance, style, scatter_pr_month, style, scatter_start, style, donut_total_hours, style,top_speed,max_watts,high_heart,most_elevation,most_pr,kilojoules,hr_speed,style,elevation,style

@@ -256,43 +256,43 @@ def create_dash_app(flask_app):
                                     className="record-content-item",
                                     children=[
                                         html.P("Top Speed", className="kudos-count"),
-                                        html.P("72", className="kudos"),
+                                        html.P("",id='top_speed', className="kudos"),
                                         html.P("km/h",className="kudos-text")],
                                 ),
                                 html.Div(
                                     className="record-content-item",
                                     children=[
                                         html.P("Max Watts", className="kudos-count"),
-                                        html.P("1200", className="kudos"),
+                                        html.P("",id="max_watts", className="kudos"),
                                         html.P("W",className="kudos-text")],
                                 ),
                                 html.Div(
                                     className="record-content-item",
                                     children=[
                                         html.P("Highest Heartrate", className="kudos-count"),
-                                        html.P("210", className="kudos"),
+                                        html.P("",id="highest_heartrate", className="kudos"),
                                         html.P("bpm",className="kudos-text")],
                                 ),
                                 html.Div(
                                     className="record-content-item",
                                     children=[
                                         html.P("Most Elevation Gain", className="kudos-count"),
-                                        html.P("2300", className="kudos"),
+                                        html.P("",id="most_elevation", className="kudos"),
                                         html.P("m",className="kudos-text")],
                                 ),
                                 html.Div(
                                     className="record-content-item",
                                     children=[
                                         html.P("Prs", className="kudos-count"),
-                                        html.P("42", className="kudos"),
+                                        html.P("",id="pr", className="kudos"),
                                         html.P("prs",className="kudos-text")],
                                 ),
                                 html.Div(
                                     className="record-content-item",
                                     children=[
-                                        html.P("Athletes", className="kudos-count"),
-                                        html.P("900", className="kudos"),
-                                        html.P("people",className="kudos-text")],
+                                        html.P("Kilojoules", className="kudos-count"),
+                                        html.P("",id="athlete", className="kudos"),
+                                        html.P("kj lost",className="kudos-text")],
                                 ),
                             ]
                         )
@@ -336,7 +336,11 @@ def create_dash_app(flask_app):
                                     ])
                                 ]
                             ),
-                            scatter_hr_speed()
+                            dcc.Graph(
+                                id="scatter_hr_speed",
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'height': '100%', 'visibility': 'hidden'},
+                            )
                             ]
                     ),
 
@@ -349,12 +353,16 @@ def create_dash_app(flask_app):
                                 children=[
                                     html.Img(src=dash.get_asset_url('mountain.svg'),className="box-icon"),
                                     html.Div([
-                                        html.P("Elevation", className="box-title"),
+                                        html.P("Elevation (km)", className="box-title"),
                                         html.P("total elevation per month", className="box-subtitle"),
                                     ])
                                 ]
                             ),
-                            bar_elevation()
+                            dcc.Graph(
+                                id='elevation',
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'height': '100%', 'visibility': 'hidden'},
+                            )
                         ]
                                   
                     ),

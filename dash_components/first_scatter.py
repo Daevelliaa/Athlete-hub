@@ -55,6 +55,7 @@ def scatter_distance_power(df):
         xaxis=dict(
             #title="Distance",
             showgrid=False,
+            zeroline=False,
             showline=True,
             ticks='outside',
             tickcolor='white',
@@ -67,6 +68,7 @@ def scatter_distance_power(df):
             )
         ),
         yaxis=dict(
+            zeroline=False,
             range=[45,225],
             showgrid=False,
             showline=True,
@@ -75,7 +77,6 @@ def scatter_distance_power(df):
             ticklen=6,
             tickvals=[45,90,135,180,225],
             ticktext=['45w','90w','135w','180w','225w'],
-            zeroline=True,
             tickfont=dict(
                 color='white',
                 family='SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',

@@ -368,6 +368,120 @@ def create_dash_app(flask_app):
                     ),
                 ]
             ),
+
+            # Div principale qui contient les 4 boîtes
+            html.Div(
+                className="flex-container",  # Classe pour utiliser Flexbox
+                children=[
+
+                    #Item ou Box pour les kudos et commentaires 
+                    html.Div(
+                        className="box",
+                        children=[html.Div(
+                            className="box-header",
+                            children=[
+                                html.Img(src=dash.get_asset_url('file-badge-2.svg'),className="box-icon"),
+                                html.Div(
+                                    children=[
+                                        html.P("Biggest Activity", className="box-title"),
+                                        html.P("", className="box-subtitle")
+                                    ]
+                                ),
+                                
+                            ]
+
+                        ),
+                        html.P(id='map-title', className='map-title'),
+                        dcc.Graph(
+                            id='map',
+                            config={'displayModeBar': False, 'responsive': True},
+                            style={'width': '100%', 'height': '100%', 'visibility': 'hidden'},
+                        ),
+                        html.Div(
+                            id='map-infos',
+                            className='map-infos-container',
+                            children=[
+                                html.P(id='map-distance',className='map-info'),
+                                html.P(id='map-elevation',className='map-info'),
+                                 html.P(id='map-speed',className='map-info'),
+                            ]
+
+                        ),
+                        
+                        
+                                  ]
+                    ),
+
+                    #Le graph scatter avec power vs distance et la régréssion linéaire très stylé
+                    html.Div(
+                        className="box",
+                        children=[
+                            html.Div(
+                                className="box-header",
+                                children=[
+                                    html.Img(src=dash.get_asset_url('biceps-flexed.svg'),className="box-icon"),
+                                    html.Div([
+                                        html.P("Activity count", className="box-title"),
+                                        html.P("number of activities per month", className="box-subtitle"),
+                                    ])
+                                ]
+                            ),
+                            dcc.Graph(
+                                
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'height': '100%', 'visibility': 'hidden'}
+                            ),
+                        ]
+                    ),
+
+                    # Ici un scatter avec les Personnal Records tous les mois
+
+                    html.Div(
+                        className="box",
+                        children=[
+                            html.Div(
+                                className="box-header",
+                                children=[
+                                    html.Img(src=dash.get_asset_url('ruler.svg'),className="box-icon"),
+                                    html.Div([
+                                        html.P("Distance Ranges", className="box-title"),
+                                        html.P("number of activities within a distance range", className="box-subtitle"),
+                                    ])
+                                ]
+                            ),
+                            dcc.Graph(
+                                
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'height': '100%', 'visibility': 'hidden'}
+                            ),
+                            ]
+                    ),
+
+                    #Ici un scatter avec l'heure de départ des différentes activités dans la journée
+
+                    html.Div(
+                        className="box",
+                        children=[
+                            html.Div(
+                                className="box-header",
+                                children=[
+                                    html.Img(src=dash.get_asset_url('chart-no-axes-combined.svg'),className="box-icon"),
+                                    html.Div([
+                                        html.P("Distance vs. Elevation", className="box-title"),
+                                        html.P("elevation gained per distance", className="box-subtitle"),
+                                    ])
+                                ]
+                            ),
+                            dcc.Graph(
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'height': '100%', 'visibility': 'hidden'},
+
+                            ),
+                        ]
+                                  
+                    ),
+                ]
+            ),            
         ]
     )
 

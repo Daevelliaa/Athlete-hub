@@ -13,6 +13,7 @@ from dash_components.start_time_scatter import scatter_start_time
 from dash_components.total_hours_donut import total_hours_donut
 from dash_components.scatter_HR_speed import scatter_hr_speed
 from dash_components.bar_elevation import bar_elevation
+from dash_components.biggest_activity import biggest_activity_map
 from dash import no_update, html
 
 def register_callbacks(dash_app):
@@ -97,6 +98,12 @@ def register_callbacks(dash_app):
         Output('scatter_hr_speed', 'style'),
         Output('elevation', 'figure'),
         Output('elevation', 'style'),
+        Output('map', 'figure'),
+        Output('map', 'style'),
+        Output('map-title', 'children'),
+        Output('map-distance', 'children'),
+        Output('map-elevation', 'children'),
+        Output('map-speed', 'children'),
         Input('yearly_activities_store', 'data')
     )
 
@@ -104,13 +111,13 @@ def register_callbacks(dash_app):
         if not activities:
             fig = loading_fig()
             style = {'width': '100%', 'height': '100%', 'display': 'block'}
-            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style,"0","0","0","0","0","0",fig,style,fig,style
+            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style,"0","0","0","0","0","0",fig,style,fig,style,fig,style,"","","",""
 
         df = pd.DataFrame(activities)
         if 'start_date' not in df:
             fig = loading_fig()
             style = {'width': '100%', 'height': '100%', 'display': 'block'}
-            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style,"0","0","0","0","0","0",fig,style,fig,style
+            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style,"0","0","0","0","0","0",fig,style,fig,style,fig,style,"","","","",""
 
         # Génération des graphes
         bar_fig = create_graphique(df)
@@ -121,6 +128,7 @@ def register_callbacks(dash_app):
         donut_total_hours = total_hours_donut(df)
         hr_speed=scatter_hr_speed(df)
         elevation=bar_elevation(df)
+        map=biggest_activity_map(df)
 
         style = {'width': '100%', 'height': '100%', 'visibility': 'visible'}
         total_kudos = df['kudos_count'].sum() if 'kudos_count' in df else 0
@@ -131,5 +139,25 @@ def register_callbacks(dash_app):
         most_elevation=df["total_elevation_gain"].max()
         most_pr=df["pr_count"].sum()
         kilojoules=df["kilojoules"].max()
+        biggest = df.loc[df['distance'].idxmax()]
+        name = biggest.get('name', 'Sortie inconnue')
+        distance_km = round(biggest['distance'] / 1000, 1)
+        elevation_2 = round(biggest.get('total_elevation_gain', 0))
+        moving_time_hours = biggest['moving_time'] / 3600
+        speed_kmh = round(distance_km / moving_time_hours, 1) if moving_time_hours > 0 else 0
 
-        return bar_fig, style, donut_fig, style, str(total_kudos), str(total_comments), scatter_power_distance, style, scatter_pr_month, style, scatter_start, style, donut_total_hours, style,top_speed,max_watts,high_heart,most_elevation,most_pr,kilojoules,hr_speed,style,elevation,style
+        distance_text = [
+            "Distance", html.Br(), f"{distance_km}", html.Br(), "km"
+        ]
+
+        elevation_text = [
+            "Dénivelé", html.Br(), f"{elevation_2}", html.Br(), "m"
+        ]
+
+        speed_text = [
+            "Vitesse", html.Br(), f"{speed_kmh}", html.Br(), "km/h"
+            ]
+
+
+
+        return bar_fig, style, donut_fig, style, str(total_kudos), str(total_comments), scatter_power_distance, style, scatter_pr_month, style, scatter_start, style, donut_total_hours, style,top_speed,max_watts,high_heart,most_elevation,most_pr,kilojoules,hr_speed,style,elevation,style,map,style,name, distance_text, elevation_text, speed_text

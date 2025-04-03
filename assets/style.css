@@ -143,3 +143,26 @@ p {
     font-size: 12px;
     font-family: SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
 }
+
+.map-title {
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .map-infos-container {
+    display: flex;
+    justify-content: center;  /* Centre les éléments dans la box */
+    gap: 20px;                 /* Espacement entre chaque bloc */
+    margin-top: 2px;
+    margin-bottom: 2px;
+  }
+  
+  .map-info {
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0;
+  }
+  

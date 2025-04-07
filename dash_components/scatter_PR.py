@@ -1,39 +1,43 @@
-import plotly.graph_objects as go 
-from dash import dcc
+import plotly.graph_objects as go
 import pandas as pd
 
 def scatter_pr(df):
-
     df = df.copy()
-
-    # S'assurer que la colonne est en datetime
     df['start_date'] = pd.to_datetime(df['start_date'])
 
-    # Extraire le mois dans une nouvelle colonne
-    df['month'] = df['start_date'].dt.month
+    # Calcul de la période
+    start = df['start_date'].min()
+    end = df['start_date'].max()
+    days = (end - start).days
 
-    # Grouper par mois et sommer les pr_count
-    monthly_pr = df.groupby('month')['pr_count'].sum()
+    # Agrégation dynamique
+    if days <= 14:
+        df['periode'] = df['start_date'].dt.date
+        #title = "PR par jour"
+    elif days <= 90:
+        df['periode'] = df['start_date'].dt.to_period('W').apply(lambda r: r.start_time.date())
+        #title = "PR par semaine"
+    else:
+        df['periode'] = df['start_date'].dt.to_period('M').apply(lambda r: r.start_time.date())
+        #title = "PR par mois"
 
-    # Remplir les mois manquants avec 0
-    monthly_pr = monthly_pr.reindex(range(1, 13), fill_value=0)
+    grouped = df.groupby('periode')['pr_count'].sum().fillna(0)
+    x_labels = grouped.index.astype(str).tolist()
+    y_values = grouped.values.tolist()
 
-
-
-    mois = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-    figure=go.Figure()
+    # Création du graphique
+    figure = go.Figure()
 
     figure.add_trace(
         go.Scatter(
-            x=mois,
-            y=monthly_pr.values,
+            x=x_labels,
+            y=y_values,
             mode="lines+markers+text",
-            text=monthly_pr.values,
+            text=y_values,
             textposition='top center',
             textfont=dict(
                 color='white',
-                size=10,
+                size=10  
             ),
             line=dict(
                 shape='hvh',
@@ -41,29 +45,28 @@ def scatter_pr(df):
                 color='#5FB49C',
             ),
             marker=dict(
-                size=5,
+                size=6,
                 color='white',
             )
         )
     )
 
     figure.update_layout(
+        #title=title,
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         xaxis=dict(
             showgrid=False,
             zeroline=False,
             showline=True,
-            tickvals=[0,3,6,9],
-            ticktext=["Janvier","Avril","Juillet","Octobre"],
+            tickangle=0,
             tickfont=dict(
                 color="white",
-                family='SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace',
+                family='monospace',
             ),
             ticks='outside',
             ticklen=6,
             tickcolor='white',
-        
         ),
         yaxis=dict(
             zeroline=False,
@@ -71,7 +74,8 @@ def scatter_pr(df):
             showline=False,
             showticklabels=False,
         ),
+        font=dict(color="white"),
         margin=dict(t=30, b=30, l=30, r=30),
-
     )
+
     return figure

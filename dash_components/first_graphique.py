@@ -1,48 +1,60 @@
 import plotly.graph_objs as go
-from dash import dcc
 import pandas as pd
 
 def create_graphique(df):
-    #ajouter une colonne mois au dataframe des activités
-    df=df.copy()
-    df['start_date']=pd.to_datetime(df['start_date'])
-    df['mois']=df['start_date'].dt.month
+    df = df.copy()
+    df['start_date'] = pd.to_datetime(df['start_date'])
 
-    # Grouper les distances par mois
-    monthly_km = df.groupby('mois')['distance'].sum() / 1000  # m → km
-    
-    # Données des kilomètres parcourus chaque mois
-    mois = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    # Déterminer la durée sélectionnée
+    start = df['start_date'].min()
+    end = df['start_date'].max()
+    days = (end - start).days
 
-    y_values = [monthly_km.get(i, 0) for i in range(1, 13)]
-    text_values = [str(int(km)) for km in y_values]
+    # Déterminer la fréquence d’agrégation
+    if days <= 14:
+        df['periode'] = df['start_date'].dt.date  # par jour
+        x_labels = df['periode'].sort_values().unique()
+        #title = "Distance quotidienne"
+    elif days <= 90:
+        df['periode'] = df['start_date'].dt.to_period('W').apply(lambda r: r.start_time.date())  # par semaine
+        x_labels = df['periode'].sort_values().unique()
+        #title = "Distance hebdomadaire"
+    else:
+        df['periode'] = df['start_date'].dt.to_period('M').apply(lambda r: r.start_time.date())  # par mois
+        x_labels = df['periode'].sort_values().unique()
+        #title = "Distance mensuelle"
 
-    figure=go.Figure()
+    # Agrégation des distances (en km)
+    grouped = df.groupby('periode')['distance'].sum() / 1000
+    y_values = [grouped.get(x, 0) for x in x_labels]
+    text_values = [str(round(km)) for km in y_values]
 
+
+    # Construction du graphique
+    figure = go.Figure()
     figure.add_trace(go.Bar(
-          name='mois vs kilomètres',
-          text=text_values,
-          x=mois,
-          y=y_values,
-          textposition='outside',
-          marker=dict(color='#5FB49C',line=dict(color='black',width=0.5)),
-          textfont=dict(color='white',family='SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace', size=15),
-          opacity=0.8
-
+        name='Distance',
+        text=text_values,
+        x=[str(x) for x in x_labels],
+        y=y_values,
+        textposition='outside',
+        cliponaxis=False,
+        marker=dict(color='#5FB49C', line=dict(color='black', width=0.5)),
+        textfont=dict(color='white', family='monospace', size=15),
+        opacity=0.85
     ))
-        
+
+    # Layout du graphique
     figure.update_layout(
-        uirevision=False,
+        #title=title,
         barcornerradius=5,
+        uirevision=False,
         xaxis=dict(
-            tickvals=[0, 3, 6, 9],
-            ticktext=['Janvier', 'Avril', 'Juillet', 'Octobre'],
             showgrid=False,
-            zeroline=False,
             showline=True,
             linecolor='white',
             tickangle=0,
-            tickfont=dict(color='white',family='SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace'),
+            tickfont=dict(color='white', family='monospace'),
             ticks='outside',
             ticklen=6,
             tickcolor='white',
@@ -56,9 +68,7 @@ def create_graphique(df):
         plot_bgcolor='rgba(0,0,0,0)',
         font=dict(color='white'),
         showlegend=False,
-        margin=dict(t=60, b=30, l=30, r=30),
+        margin=dict(t=30, b=30, l=30, r=30),
     )
+
     return figure
-        
-
-

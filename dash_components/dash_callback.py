@@ -14,6 +14,9 @@ from dash_components.total_hours_donut import total_hours_donut
 from dash_components.scatter_HR_speed import scatter_hr_speed
 from dash_components.bar_elevation import bar_elevation
 from dash_components.biggest_activity import biggest_activity_map
+from dash_components.activity_count_bar import activity_count_bar
+from dash_components.distance_range_donut import distance_range_donut
+from dash_components.scatter_temp_speed import scatter_temp_speed
 from dash import no_update, html
 
 def register_callbacks(dash_app):
@@ -58,15 +61,16 @@ def register_callbacks(dash_app):
     @dash_app.callback(
         Output('yearly_activities_store', 'data'),
         Input('athlete_store', 'data'),            # ⬅️ déclenche au chargement utilisateur
-        Input('year-selector', 'value')            # ⬅️ on lit l’année par défaut
+        Input('date-range-picker','start_date'),
+        Input('date-range-picker','end_date')            # ⬅️ on lit la plage séléctionnée
     )
-    def load_activities_for_year(athlete, selected_year):
-        if not athlete or not selected_year:
+    def load_activities_for_period(athlete, start_date, end_date):
+        if not athlete or not start_date or not end_date:
             return []
 
         token = flask.session.get('access_token')
-        after = int(time.mktime(datetime(selected_year, 1, 1).timetuple()))
-        before = int(time.mktime(datetime(selected_year + 1, 1, 1).timetuple()))
+        after = int(datetime.strptime(start_date, "%Y-%m-%d").timestamp())
+        before = int(datetime.strptime(end_date, "%Y-%m-%d").timestamp())
     
         activities = get_strava_activities(token, after, before)
         return activities
@@ -104,6 +108,12 @@ def register_callbacks(dash_app):
         Output('map-distance', 'children'),
         Output('map-elevation', 'children'),
         Output('map-speed', 'children'),
+        Output('activity-count', 'figure'),
+        Output('activity-count', 'style'),
+        Output('range-donut', 'figure'),
+        Output('range-donut', 'style'),
+        Output('scatter-temp', 'figure'),
+        Output('scatter-temp', 'style'),
         Input('yearly_activities_store', 'data')
     )
 
@@ -111,13 +121,13 @@ def register_callbacks(dash_app):
         if not activities:
             fig = loading_fig()
             style = {'width': '100%', 'height': '100%', 'display': 'block'}
-            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style,"0","0","0","0","0","0",fig,style,fig,style,fig,style,"","","",""
+            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style,"0","0","0","0","0","0",fig,style,fig,style,fig,style,"","","","",fig,style,fig,style,fig,style
 
         df = pd.DataFrame(activities)
         if 'start_date' not in df:
             fig = loading_fig()
             style = {'width': '100%', 'height': '100%', 'display': 'block'}
-            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style,"0","0","0","0","0","0",fig,style,fig,style,fig,style,"","","","",""
+            return fig, style, fig, style, "0", "0", fig, style, fig, style, fig, style, fig, style,"0","0","0","0","0","0",fig,style,fig,style,fig,style,"","","","","",fig,style,fig,style,fig,style
 
         # Génération des graphes
         bar_fig = create_graphique(df)
@@ -129,6 +139,9 @@ def register_callbacks(dash_app):
         hr_speed=scatter_hr_speed(df)
         elevation=bar_elevation(df)
         map=biggest_activity_map(df)
+        activity_count=activity_count_bar(df)
+        range_donut=distance_range_donut(df)
+        scatter_temp=scatter_temp_speed(df)
 
         style = {'width': '100%', 'height': '100%', 'visibility': 'visible'}
         total_kudos = df['kudos_count'].sum() if 'kudos_count' in df else 0
@@ -160,4 +173,4 @@ def register_callbacks(dash_app):
 
 
 
-        return bar_fig, style, donut_fig, style, str(total_kudos), str(total_comments), scatter_power_distance, style, scatter_pr_month, style, scatter_start, style, donut_total_hours, style,top_speed,max_watts,high_heart,most_elevation,most_pr,kilojoules,hr_speed,style,elevation,style,map,style,name, distance_text, elevation_text, speed_text
+        return bar_fig, style, donut_fig, style, str(total_kudos), str(total_comments), scatter_power_distance, style, scatter_pr_month, style, scatter_start, style, donut_total_hours, style,top_speed,max_watts,high_heart,most_elevation,most_pr,kilojoules,hr_speed,style,elevation,style,map,style,name, distance_text, elevation_text, speed_text,activity_count,style,range_donut,style,scatter_temp,style

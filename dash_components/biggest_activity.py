@@ -13,14 +13,20 @@ def biggest_activity_map(df):
     #ici biggest est une ligne complète du dataframe qui est la ligne ou la distance a été la plus grande 
     biggest = df.loc[df['distance'].idxmax()]
 
-    # Décoder la summary_polyline si elle existe
-    if 'summary_polyline' in biggest['map']:
-        #coords correspond à toutes les coordonnées de la sortie en latitude et longitude
-        coords = polyline.decode(biggest['map']['summary_polyline'])
-    else:
-        return go.Figure()  # Pas de trace dispo, on renvoie une figure vide
-    
-    # On sépare en lat et lon
+    polyline_data = biggest.get('map', {}).get('summary_polyline', '')
+
+    # ✅ Nouveau check : polyline présente ET non vide
+    if not polyline_data:
+        return go.Figure()
+
+    try:
+        coords = polyline.decode(polyline_data)
+        if not coords:
+            return go.Figure()  # la polyline a été décodée mais elle est vide
+    except Exception:
+        return go.Figure()  # en cas d'erreur de décodage
+
+    # Si tout est bon, on continue
     lats, lons = zip(*coords)
 
     figure = go.Figure()

@@ -1,6 +1,7 @@
 import dash
 from dash import html, dcc
 
+from datetime import date, datetime
 from dash_components.first_graphique import create_graphique
 from dash_components.donut_chart import create_donut_graphique
 from dash_components.first_scatter import scatter_distance_power
@@ -32,17 +33,26 @@ def create_dash_app(flask_app):
                     },
                     children=[
                         html.P(id='welcome-text', style={"text-align": "left"}),
-                        dcc.Dropdown(
-                            id='year-selector',
-                            options=[{'label': str(year), 'value': year} for year in range(2018, 2026)],
-                            value=2024,
-                            placeholder="Choisir une année",
-                            clearable=False,
-                            style={
-                                'width': '200px',
-                                'color': 'black'    
-                                },
-            ),
+                        #dcc.Dropdown(
+                            #id='year-selector',
+                            #options=[{'label': str(year), 'value': year} for year in range(2018, 2026)],
+                            #value=2024,
+                            #placeholder="Choisir une année",
+                            #clearable=False,
+                            #style={
+                                #'width': '200px',
+                                #'color': 'black'    
+                                #},
+            #),
+            #html.Label("Sélectionne une plage de dates :"),
+            dcc.DatePickerRange(
+                id='date-range-picker',
+                max_date_allowed=datetime.today().date(),
+                min_date_allowed=date(2018,1,1),
+                start_date=date(2024, 1, 1),
+                end_date=date(2025,1,1),
+                display_format='DD/MM/YYYY'
+    ),
             dcc.Store(id='yearly_activities_store'),
 
                     ]
@@ -353,7 +363,7 @@ def create_dash_app(flask_app):
                                 children=[
                                     html.Img(src=dash.get_asset_url('mountain.svg'),className="box-icon"),
                                     html.Div([
-                                        html.P("Elevation (km)", className="box-title"),
+                                        html.P("Elevation (m)", className="box-title"),
                                         html.P("total elevation per month", className="box-subtitle"),
                                     ])
                                 ]
@@ -427,7 +437,7 @@ def create_dash_app(flask_app):
                                 ]
                             ),
                             dcc.Graph(
-                                
+                                id='activity-count',
                                 config={'displayModeBar': False, 'responsive': True},
                                 style={'width': '100%', 'height': '100%', 'visibility': 'hidden'}
                             ),
@@ -450,7 +460,7 @@ def create_dash_app(flask_app):
                                 ]
                             ),
                             dcc.Graph(
-                                
+                                id='range-donut',
                                 config={'displayModeBar': False, 'responsive': True},
                                 style={'width': '100%', 'height': '100%', 'visibility': 'hidden'}
                             ),
@@ -465,14 +475,15 @@ def create_dash_app(flask_app):
                             html.Div(
                                 className="box-header",
                                 children=[
-                                    html.Img(src=dash.get_asset_url('chart-no-axes-combined.svg'),className="box-icon"),
+                                    html.Img(src=dash.get_asset_url('thermometer-sun.svg'),className="box-icon"),
                                     html.Div([
-                                        html.P("Distance vs. Elevation", className="box-title"),
-                                        html.P("elevation gained per distance", className="box-subtitle"),
+                                        html.P("Temp vs. Speed", className="box-title"),
+                                        html.P("avg temperature per avg speed", className="box-subtitle"),
                                     ])
                                 ]
                             ),
                             dcc.Graph(
+                                id='scatter-temp',
                                 config={'displayModeBar': False, 'responsive': True},
                                 style={'width': '100%', 'height': '100%', 'visibility': 'hidden'},
 

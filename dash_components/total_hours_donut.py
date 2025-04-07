@@ -41,6 +41,7 @@ def total_hours_donut(df):
             line=dict(color='white', width=1)
         ),
         sort=False,
+        pull=[0.05]*5 , # effet stylé qui écarte les parts
         domain=dict(x=[0.2, 0.8], y=[0.1, 0.8])  #le domaine du donut de la figure
     ))
 

@@ -1,9 +1,13 @@
 import plotly.graph_objects as go
 import numpy as np
 import pandas as pd
+from dash import no_update
 
 def scatter_temp_speed(df):
     df = df.copy()
+
+    if df.empty or 'average_temp' not in df.columns or 'average_speed' not in df.columns:
+        return no_update
 
     # 🎯 Filtrer uniquement les Rides avec température disponible
     df_ride = df[

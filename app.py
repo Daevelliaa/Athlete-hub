@@ -13,5 +13,8 @@ app.register_blueprint(main_bp)
 dash_app=create_dash_app(app)
 register_callbacks(dash_app)
 
+# 👇 Obligatoire pour Render (gunicorn cherche "server")
+server = app
+
 if __name__=="__main__":
     app.run(debug=True)

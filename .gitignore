@@ -8,3 +8,5 @@ venv/
 *.log
 *.tmp
 __pycache__/
+
+.env

@@ -9,7 +9,7 @@ def scatter_temp_speed(df):
     if df.empty or 'average_temp' not in df.columns or 'average_speed' not in df.columns:
         return no_update
 
-    # 🎯 Filtrer uniquement les Rides avec température disponible
+    # Filtrer uniquement les Rides avec température disponible
     df_ride = df[
         (df['type'] == 'Ride') &
         df['average_temp'].notnull() &
@@ -24,14 +24,14 @@ def scatter_temp_speed(df):
     if df_ride.empty or len(df_ride) < 2:
         return go.Figure()
 
-    # ➕ Régression linéaire
+    # Régression linéaire
     x = np.array(df_ride['temp'])
     y = np.array(df_ride['speed_kmh'])
     a, b = np.polyfit(x, y, deg=1)
     x_trend = np.linspace(min(x), max(x), 100)
     y_trend = a * x_trend + b
 
-    # 📈 Scatter
+    # Scatter
     fig = go.Figure()
 
     fig.add_trace(go.Scatter(

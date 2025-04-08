@@ -20,6 +20,17 @@ p {
     margin-bottom: 3px;
 }
 
+.flex-container2 {
+    display: flex;  /* Active Flexbox */
+    flex-wrap: wrap;  /* Permet aux éléments de passer à la ligne si nécessaire */
+    justify-content: flex-start;  /* met les éléments à droite */
+    padding: 0px;
+    margin:0;
+    margin-bottom: 3px;
+    gap: 4px;                   
+    padding-left: 4px;
+}
+
 /* OBJECTIF FAIRE DES BOX RESPONSIVE POUR CHAQUE ECRAN DONC TEL, PC AVEC FLEXBOX */
 .box {
     background-color: rgb(18, 18, 18);  /* Fond gris foncé */

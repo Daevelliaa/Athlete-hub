@@ -492,7 +492,59 @@ def create_dash_app(flask_app):
                                   
                     ),
                 ]
-            ),            
+            ),
+            # Div principale qui contient les 4 boîtes
+            html.Div(
+                className="flex-container2",  # Classe pour utiliser Flexbox
+                children=[
+                    
+                    #Le radar chart avec les heartrate zone
+                    html.Div(
+                        className="box",
+                        children=[
+                            html.Div(
+                                className="box-header",
+                                children=[
+                                    html.Img(src=dash.get_asset_url('activity.svg'),className="box-icon"),
+                                    html.Div([
+                                        html.P("Heartrate Zones (avg)", className="box-title"),
+                                        html.P("total hours spent in each zone", className="box-subtitle"),
+                                    ])
+                                ]
+                            ),
+                            dcc.Graph(
+                                id='radar',
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'height': '100%', 'visibility': 'hidden'}
+                            ),
+                        ]
+                    ),
+
+                    # Ici un scatter avec les Personnal Records tous les mois
+
+                    html.Div(
+                        className="box",
+                        children=[
+                            html.Div(
+                                className="box-header",
+                                children=[
+                                    html.Img(src=dash.get_asset_url('chart-no-axes-combined.svg'),className="box-icon"),
+                                    html.Div([
+                                        html.P("Distance vs. Elevation", className="box-title"),
+                                        html.P("elevation gained per distance", className="box-subtitle"),
+                                    ])
+                                ]
+                            ),
+                            dcc.Graph(
+                                id='scatter-elevation',
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'height': '100%', 'visibility': 'hidden'}
+                            ),
+                            ]
+                    ),
+                ]
+            ),
+                        
         ]
     )
 

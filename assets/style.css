@@ -59,6 +59,12 @@ p {
     height: 450px;
 }
 
+.box-dropdown {
+    margin-left: auto;
+    margin-top: 10px;   /* petit espace depuis le haut */
+    margin-right: 10px;
+}
+
 .box-header{
     display:flex;
     align-items: flex-start;
@@ -166,8 +172,8 @@ p {
     display: flex;
     justify-content: center;  /* Centre les éléments dans la box */
     gap: 20px;                 /* Espacement entre chaque bloc */
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin-top: 0px;
+    margin-bottom: 10px;
   }
   
   .map-info {
@@ -177,3 +183,39 @@ p {
     margin: 0;
   }
   
+
+  .heatmap-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.heatmap-legend {
+    margin-top: 10px;
+    padding-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.legend-colors {
+    display: flex;
+    gap: 4px;
+}
+
+.legend-colors div {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+}
+
+.legend-label {
+    color: white;
+    font-size: 12px;
+    font-family: monospace;
+}
+

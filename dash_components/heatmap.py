@@ -1,9 +1,9 @@
+# heatmap_utils.py
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-import calendar
 from datetime import datetime
-import os
+import calendar
 
 def create_heatmap_matrix_from_df(df, year):
     df['start_date'] = pd.to_datetime(df['start_date'])
@@ -28,12 +28,11 @@ def create_heatmap_matrix_from_df(df, year):
         week = row['week'] - 1
         day = row['weekday']
         matrix[day, week] = row['hours']
-    
-    matrix = np.flipud(matrix)  # ← 🧠 retourne les lignes (dimanche en bas, lundi en haut)
+
+    matrix = np.flipud(matrix)  # Lundi en haut, dimanche en bas
     return matrix
 
 def create_heatmap_figure_from_matrix(matrix, year):
-    month_lines = []
     tickvals, ticktext = [], []
     for m in range(1, 13):
         first_day = datetime(year, m, 1)
@@ -42,11 +41,7 @@ def create_heatmap_figure_from_matrix(matrix, year):
             week_idx = 0
         tickvals.append(week_idx + 1)
         ticktext.append(calendar.month_abbr[m])
-        if m < 12:
-            month_lines.append(dict(
-                type="line", x0=week_idx + 0.5, x1=week_idx + 0.5,
-                y0=-0.5, y1=6.5, line=dict(width=2, color="white")
-            ))
+        
 
     fig = go.Figure(data=go.Heatmap(
         z=matrix,
@@ -58,12 +53,12 @@ def create_heatmap_figure_from_matrix(matrix, year):
     ))
 
     fig.update_layout(
-        shapes=month_lines,
+        
         yaxis=dict(showgrid=False, showline=False, zeroline=False, showticklabels=False),
-        margin=dict(t=100, b=100, l=5, r=5),
+        margin=dict(t=110, b=200, l=5, r=5),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        title=f"Heatmap des heures d'activité - {year}"
+        #title=f"Heatmap des heures d'activité - {year}"
     )
 
     fig.update_xaxes(
@@ -78,19 +73,3 @@ def create_heatmap_figure_from_matrix(matrix, year):
     )
 
     return fig
-
-# ==============================
-# 🔽 Lancement du script ici 🔽
-# ==============================
-if __name__ == "__main__":
-    year = 2024
-    json_path = "activities_2024.json"
-
-    if not os.path.exists(json_path):
-        print(f"❌ Fichier {json_path} introuvable.")
-    else:
-        print(f"✅ Lecture de {json_path} pour l'année {year}...")
-        df = pd.read_json(json_path)
-        matrix = create_heatmap_matrix_from_df(df, year)
-        fig = create_heatmap_figure_from_matrix(matrix, year)
-        fig.show()

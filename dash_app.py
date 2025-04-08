@@ -67,7 +67,40 @@ def create_dash_app(flask_app):
                 children=[
                     html.Div(
                         className="box1",
-                        children=[heatmap()]
+                        children=[
+                            html.Div(
+                                className="box-header",
+                                children=[
+                                    html.Img(src=dash.get_asset_url('calendar-days.svg'), className="box-icon"),
+                                    html.Div([
+                                        html.P("Daily Activities", className="box-title"),
+                                        html.P("hours per day of activities", className="box-subtitle"),
+                                        ]),
+                                        html.Div(
+                                            className="box-dropdown",
+                                            children=[
+                                                dcc.Dropdown(
+                                                    id='year-selector',
+                                                    options=[{'label': str(y), 'value': y} for y in range(2018, 2026)],
+                                                    value=2024,
+                                                    clearable=False,
+                                                    style={'width': '200px', 'color': 'black'}
+                                        ),
+
+                                            ]
+                                        ),
+                                        
+                                        dcc.Store(id='year'),
+                                    ]
+                                
+                            ),
+                            dcc.Graph(
+                                id='heatmap-container',
+                                config={'displayModeBar': False, 'responsive': True},
+                                style={'width': '100%', 'visibility': 'hidden'}
+                            ),
+
+                        ]
                     ),
 
                     #Item/Box pour les total hours per month 

@@ -20,7 +20,7 @@ def create_donut_graphique(df):
     # Création du donut
     figure = go.Figure(
         data=[go.Pie(
-            labels=['Jours actifs', 'Jours de repos'],
+            labels=['Active days', 'Rest days'],
             values=[active_days, rest_days],
             hole=0.6,
             textinfo='value',

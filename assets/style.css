@@ -220,7 +220,7 @@ p {
 }
 
 .logo-strava {
-    width: 200px; /* Largeur de l'image */
-    height: 70px; /* Laisse la hauteur s'ajuster proportionnellement */
+    width: 150px; /* Largeur de l'image */
+    height: 50px; /* Laisse la hauteur s'ajuster proportionnellement */
     margin-left: 20px;
   }

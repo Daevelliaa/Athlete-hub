@@ -115,8 +115,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Total Distance", className="box-title"),
                                         html.P("total distance per month", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                                 dcc.Graph(
                                     id='Bar_chart',
@@ -138,8 +152,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Rest Days",className="box-title"),
                                         html.P("rest days vs. active days", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                                 dcc.Graph(
                                     id='Donut_first_chart',
@@ -169,9 +197,22 @@ def create_dash_app(flask_app):
                                         html.P("Socials", className="box-title"),
                                         html.P("total kudos and comments received", className="box-subtitle")
                                     ]
-                                )
-                                
-                            ]
+                                ),
+                                html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
 
                         ),
                         html.Div(
@@ -209,8 +250,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Distance vs. Power ", className="box-title"),
                                         html.P("power output per distance", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                             dcc.Graph(
                                 id='scatter_power_distance',
@@ -232,8 +287,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("PRs", className="box-title"),
                                         html.P("prs achieved per month", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                             dcc.Graph(
                                 id='Scatter_PR',
@@ -255,8 +324,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Start Times", className="box-title"),
                                         html.P("activity start times", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                             dcc.Graph(
                                 id='Scatter_start',
@@ -288,9 +371,22 @@ def create_dash_app(flask_app):
                                         html.P("Records", className="box-title"),
                                         html.P("your top stats", className="box-subtitle")
                                     ]
-                                )
-                                
-                            ]
+                                ),
+                                html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
 
                         ),
                         html.Div(
@@ -354,8 +450,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Total Hours ", className="box-title"),
                                         html.P("total hours spent per sport", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                             dcc.Graph(
                                 id='donut_total_hours',
@@ -377,8 +487,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Heartrate vs. Speed", className="box-title"),
                                         html.P("heartrate compared to speed", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                             dcc.Graph(
                                 id="scatter_hr_speed",
@@ -399,8 +523,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Elevation (m)", className="box-title"),
                                         html.P("total elevation per month", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                             dcc.Graph(
                                 id='elevation',
@@ -431,8 +569,21 @@ def create_dash_app(flask_app):
                                         html.P("", className="box-subtitle")
                                     ]
                                 ),
-                                
-                            ]
+                                html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
 
                         ),
                         html.P(id='map-title', className='map-title'),
@@ -467,8 +618,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Activity count", className="box-title"),
                                         html.P("number of activities per month", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                             dcc.Graph(
                                 id='activity-count',
@@ -490,8 +655,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Distance Ranges", className="box-title"),
                                         html.P("number of activities within a distance range", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                             dcc.Graph(
                                 id='range-donut',
@@ -513,8 +692,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Temp vs. Speed", className="box-title"),
                                         html.P("avg temperature per avg speed", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                             dcc.Graph(
                                 id='scatter-temp',
@@ -543,8 +736,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Heartrate Zones (avg)", className="box-title"),
                                         html.P("total hours spent in each zone", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                             dcc.Graph(
                                 id='radar',
@@ -566,8 +773,22 @@ def create_dash_app(flask_app):
                                     html.Div([
                                         html.P("Distance vs. Elevation", className="box-title"),
                                         html.P("elevation gained per distance", className="box-subtitle"),
-                                    ])
-                                ]
+                                    ]),
+                                    html.A(
+                                        "View on Strava",
+                                        href="https://www.strava.com",  # Remplacer par l'ID ou URL appropriée
+                                        style={
+                                            'position': 'absolute',
+                                            'top': '10px',
+                                            'right': '10px',
+                                            'font-weight': 'bold',
+                                            'color': 'white',
+                                            'text-decoration': 'underline',
+                                            'font-size': '13px',
+                                                }
+                                    ),
+                                ],
+                                style={'position': 'relative'}
                             ),
                             dcc.Graph(
                                 id='scatter-elevation',

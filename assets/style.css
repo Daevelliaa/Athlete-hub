@@ -219,3 +219,8 @@ p {
     font-family: monospace;
 }
 
+.logo-strava {
+    width: 200px; /* Largeur de l'image */
+    height: 70px; /* Laisse la hauteur s'ajuster proportionnellement */
+    margin-left: 20px;
+  }

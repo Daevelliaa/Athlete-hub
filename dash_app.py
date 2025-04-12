@@ -32,7 +32,7 @@ def create_dash_app(flask_app):
                     'alignItems': 'center',
                     },
                     children=[
-                        html.P(id='welcome-text', style={"text-align": "left"}),
+                        html.P(id='welcome-text', style={'flex': '1', 'margin-left':'10px'}),
                         #dcc.Dropdown(
                             #id='year-selector',
                             #options=[{'label': str(year), 'value': year} for year in range(2018, 2026)],
@@ -53,6 +53,7 @@ def create_dash_app(flask_app):
                 end_date=date(2025,1,1),
                 display_format='DD/MM/YYYY'
     ),
+    html.Img(src=dash.get_asset_url('api_logo_pwrdBy_strava_horiz_white.svg'),className="logo-strava"),
             dcc.Store(id='yearly_activities_store'),
 
                     ]

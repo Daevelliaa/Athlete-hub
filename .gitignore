@@ -10,3 +10,4 @@ venv/
 __pycache__/
 
 .env
+activities_2024.json

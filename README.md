@@ -1,6 +1,7 @@
 # Athlete-hub
-Mon premier repository pour ma webb app Athlete hub
-Athlete Hub permet de se connecter aux données Strava de l'utilisateur et de fournir des résumés personnalisés en fonction des dates choisies 
+Mon premier repository pour ma webb app Athlete hub !
+
+Athlete Hub permet de se connecter aux données Strava de l'utilisateur et de fournir des résumés personnalisés en fonction des dates choisies !
 
 ![athlete_hub_connection](https://github.com/user-attachments/assets/8a473004-0188-4c48-a08d-5b774e0a17f6)
 
